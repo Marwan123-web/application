@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="routers"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/profile']">
+        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      {{ 'ROUTERS' | uppercase | translate}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding" id="routers">
+  <ion-list class="ion-padding">
+    <table id="table_id" class="table table-hover table-light display">
+      <thead>
+        <tr>
+          <th scope="col">{{ 'LOCATIONID' | translate }}</th>
+          <th scope="col">{{ 'LOCATIONNAME' | translate }}</th>
+          <th scope="col">{{ 'ROUTERADDRESS' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let router of routersdata">
+        <tr>
+          <th scope="row"> <a>{{router.locationId}}</a></th>
+          <td>{{router.locationName}}</td>
+          <td>{{router.routerAddress}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </ion-list>
+  <ion-row>
+    <ion-col size="6">
+      <ion-button id="routers-addRoutersBtn" type="submit" expand="block" routerLink='/routers/add-router'
+        class="ionBtn ionBtn-success" value="AddRouter">
+        <ion-icon name="add" slot="start"></ion-icon>
+        {{ 'ADDROUTER' | translate }}
+      </ion-button>
+    </ion-col>
+    <ion-col size="6">
+      <ion-button id="routers-manageRouterBtn" type="submit" expand="block" routerLink='/routers/manage-router'
+        class="ionBtn ionBtn-danger" value="ManageRouter">
+        <ion-icon name="create-outline" slot="start"></ion-icon>
+        {{ 'MANAGEROUTER' | translate }}
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>
