@@ -90,18 +90,5 @@ export class assignmentsPage implements OnInit {
     });
 
   }
-  addTask() {
-    this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this.courseCode = params.get('courseCode');
-      this.semester_time = params.get('semester_time');
-      this._router.navigate(['/course/semester/add-task/' + this.courseCode, this.semester_time])
-    });
-  }
-  deleteTask() {
-    this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this.courseCode = params.get('courseCode');
-      this.semester_time = params.get('semester_time');
-      this._router.navigate(['/course/semester/delete-task/' + this.courseCode, this.semester_time])
-    });
-  }
+
 } 

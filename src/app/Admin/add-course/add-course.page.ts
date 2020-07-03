@@ -35,20 +35,28 @@ export class addCoursePage implements OnInit {
     this.prerequisiteName = event.target.value;
   }
   addCourse(courseCode: HTMLInputElement, courseName: HTMLInputElement, creaditHours: HTMLInputElement) {
-    this.courseCode = courseCode.value, this.courseName = courseName.value, this.creditHours = creaditHours.value;
-    this.adminservices.addCourse(this.courseCode, this.courseName, this.courseDepartment, this.creditHours, this.prerequisiteName).subscribe(res => {
-      this.alertservice.showAlert("&#xE876;", "success", res.msg);
-      courseCode.value = "";
-      courseName.value = "";
-      creaditHours.value = "";
-      this.prerequisiteName = null;
-      this.department = null;
-      this.navigateToCourses();
-    }, err => {
-      this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
+    if (this.courseDepartment == undefined) {
+      this.alertservice.showAlert("&#xE5CD;", "error", 'Please Select Course Department');
     }
-    );
-
+    else if (this.prerequisiteName == undefined) {
+      this.alertservice.showAlert("&#xE5CD;", "error", 'Please Select Prerequisite Course');
+    }
+    else {
+      this.courseCode = courseCode.value, this.courseName = courseName.value, this.creditHours = creaditHours.value;
+      this.adminservices.addCourse(this.courseCode, this.courseName, this.courseDepartment, this.creditHours, this.prerequisiteName).subscribe(res => {
+        this.alertservice.showAlert("&#xE876;", "success", res.msg);
+        courseCode.value = "";
+        courseName.value = "";
+        creaditHours.value = "";
+        this.prerequisiteName = null;
+        this.department = null;
+        this.validations_form.reset();
+        this.navigateToCourses();
+      }, err => {
+        this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
+      }
+      );
+    }
   }
 
   navigateToCourses() {

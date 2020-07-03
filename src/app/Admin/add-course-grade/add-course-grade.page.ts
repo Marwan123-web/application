@@ -50,21 +50,27 @@ export class addCourseGradePage implements OnInit {
   }
 
   addCourseGrade(grade: HTMLInputElement) {
-    this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this.courseCode = params.get('courseCode');
-      this.semester_time = params.get('semester_time');
-      this.gradetype = this.type
-      this.grade = grade.value;
-      this.adminservices.addCourseSemesterGrade(this.courseCode, this.semester_time, this.gradetype, this.grade).subscribe(res => {
-        this.alertservice.showAlert(res.icon, res.style, res.msg);
-        this.type = null;
-        grade.value = "";
-        this.navigateToCourseInfo();
-      }, err => {
-        this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
-      }
-      );
-    });
+    if (this.type == undefined) {
+      this.alertservice.showAlert("&#xE5CD;", "error", 'Please Select Grade Type');
+    }
+    else {
+      this.sub = this._Activatedroute.paramMap.subscribe(params => {
+        this.courseCode = params.get('courseCode');
+        this.semester_time = params.get('semester_time');
+        this.gradetype = this.type
+        this.grade = grade.value;
+        this.adminservices.addCourseSemesterGrade(this.courseCode, this.semester_time, this.gradetype, this.grade).subscribe(res => {
+          this.alertservice.showAlert("&#xE876;", "success", res.msg);
+          this.type = null;
+          grade.value = "";
+          this.validations_form.reset();
+          this.navigateToCourseInfo();
+        }, err => {
+          this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
+        }
+        );
+      });
+    }
 
   }
 

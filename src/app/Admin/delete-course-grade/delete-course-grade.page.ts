@@ -48,18 +48,22 @@ export class deleteCourseGradePage implements OnInit {
     this.gradetype = event.target.value;
   }
   deleteCourseGrade() {
-    this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this.courseCode = params.get('courseCode');
-      this.semester_time = params.get('semester_time');
-      this.adminservices.deleteCourseSemesterGrade(this.courseCode, this.semester_time, this.gradetype).subscribe(res => {
-        this.alertservice.showAlert(res.icon, res.style, res.msg);
-        this.navigateToCourseInfo();
-      }, err => {
-        this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
-      }
-      );
-    });
-
+    if (this.gradetype == undefined) {
+      this.alertservice.showAlert("&#xE5CD;", "error", 'Please Select Grade Type');
+    }
+    else {
+      this.sub = this._Activatedroute.paramMap.subscribe(params => {
+        this.courseCode = params.get('courseCode');
+        this.semester_time = params.get('semester_time');
+        this.adminservices.deleteCourseSemesterGrade(this.courseCode, this.semester_time, this.gradetype).subscribe(res => {
+          this.alertservice.showAlert("&#xE876;", "success", res.msg);
+          this.navigateToCourseInfo();
+        }, err => {
+          this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
+        }
+        );
+      });
+    }
   }
   navigateToCourseInfo() {
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
@@ -102,17 +106,7 @@ export class deleteCourseGradePage implements OnInit {
       ])),
     });
 
-    this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this.courseCode = params.get('courseCode');
-      this.semester_time = params.get('semester_time');
-      this.adminservices.getCourseSemesterData(this.courseCode, this.semester_time).subscribe(res => {
-        this.coursedata = res.findsemesterdata.semesters[0];
-      }, err => {
-        this.coursedata = err;
-      }
-      );
-    });
-
+    this.getcoursegrades();
   }
 
   validation_messages = {

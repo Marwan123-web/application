@@ -20,9 +20,9 @@
                 <ion-label>
                     {{ 'GRADETYPE' | translate }}
                 </ion-label>
-                <ion-select [(ngModel)]="gradestype" [ngModelOptions]="{standalone: true}" formControlName="gradetype" slot="end" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="{{ 'SELECTGRADETYPE' | translate }}" id='type' (ionChange)="onSelectChange($event)"
+                <ion-select [(ngModel)]="gradetype" [ngModelOptions]="{standalone: true}"  slot="end" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="{{ 'SELECTGRADETYPE' | translate }}" id='type' (ionChange)="onSelectChange($event)"
                     #type aria-required="required">
-                    <ion-select-option value="Assignment">{{ 'ASSIGNMENT' | translate }}</ion-select-option>
+                    <ion-select-option value="Assignment" >{{ 'ASSIGNMENT' | translate }}</ion-select-option>
                     <ion-select-option value="Quiz 1">{{ 'QUIZ 1' | translate }}</ion-select-option>
                     <ion-select-option value="Quiz 2">{{ 'QUIZ 2' | translate }}</ion-select-option>
                     <ion-select-option value="Quiz 3">{{ 'QUIZ 3' | translate }}</ion-select-option>

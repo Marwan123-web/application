@@ -60,6 +60,7 @@ export class updateStudentGradePage implements OnInit {
         this.alertservice.showAlert("&#xE876;", "success", res.msg);
         studentId.value = "";
         score.value = "";
+        this.validations_form.reset();
         this.navigateToStudentsGrades();
       }, err => {
         this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);

@@ -51,20 +51,26 @@ export class addCourseSemesterPage implements OnInit {
     this.courseSemester = event.target.value;
   }
   addCourseSemester(year: HTMLInputElement,) {
-    this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this.courseCode = params.get('courseCode');
-      this.semesterYear = moment(year.value).format('YYYY');
-      this.semester_time = this.courseSemester + " " + this.semesterYear;
-      this.adminservices.addCourseSemester(this.courseCode, this.semester_time).subscribe(res => {
-        this.alertservice.showAlert("&#xE876;", "success", res.msg);
-        year.value = "";
-        this.semester = null;
-        this.navigateToCourseSemester();
-      }, err => {
-        this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
-      }
-      );
-    });
+    if (this.courseSemester == undefined) {
+      this.alertservice.showAlert("&#xE5CD;", "error", 'Please Select Semester');
+    }
+    else {
+      this.sub = this._Activatedroute.paramMap.subscribe(params => {
+        this.courseCode = params.get('courseCode');
+        this.semesterYear = moment(year.value).format('YYYY');
+        this.semester_time = this.courseSemester + " " + this.semesterYear;
+        this.adminservices.addCourseSemester(this.courseCode, this.semester_time).subscribe(res => {
+          this.alertservice.showAlert("&#xE876;", "success", res.msg);
+          year.value = "";
+          this.semester = null;
+          this.validations_form.reset();
+          this.navigateToCourseSemester();
+        }, err => {
+          this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
+        }
+        );
+      });
+    }
   }
 
   languageChanged() {

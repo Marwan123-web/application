@@ -30,6 +30,7 @@ export class deleteTaskPage implements OnInit {
   sub: any;
   courseCode: string;
   semester_time: string;
+  myform: any;
   constructor(
     private router: Router,
     private authenticationService: AuthService,
@@ -63,29 +64,36 @@ export class deleteTaskPage implements OnInit {
     this.taskType = event.target.value;
   }
   DeleteTask() {
+    if (this.taskType == undefined) {
+      this.alertservice.showAlert("&#xE5CD;", "error", 'Please Select Task Name');
+    }
+    else {
+      this.sub = this._Activatedroute.paramMap.subscribe(params => {
+        this.courseCode = params.get('courseCode');
+        this.semester_time = params.get('semester_time');
+        this.teacherservices.deleteCourseSemesterTask(this.courseCode, this.semester_time, this.taskType).subscribe(res => {
+          this.alertservice.showAlert("&#xE876;", "success", res.msg);
+          this.validations_form.reset();
+          this.navigateToAssigments();
+        }, err => {
+          this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
+        }
+        );
+      });
+    }
+  }
+  navigateToAssigments() {
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       this.courseCode = params.get('courseCode');
       this.semester_time = params.get('semester_time');
-      this.teacherservices.deleteCourseSemesterTask(this.courseCode, this.semester_time, this.taskType).subscribe(res => {
-        this.alertservice.showAlert("&#xE876;", "success", res.msg);
-        // this.navigateTo();
-      }, err => {
-        this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
-      }
-      );
+      this.router.navigate(['/course/semester/assignments/' + this.courseCode, this.semester_time])
     });
-
-  }
-
-  navigateTo() {
-    this.router.navigate(['/courses']);
   }
 
   languageChanged() {
     this.translateConfigService.setLanguage(this.selectedLanguage);
   }
-
-  ngOnInit(): void {
+  coursedatafun() {
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       this.courseCode = params.get('courseCode');
       this.semester_time = params.get('semester_time');
@@ -101,12 +109,14 @@ export class deleteTaskPage implements OnInit {
         this.coursesemesterdata = err
       }
       );
-      this.validations_form = this.formBuilder.group({
-        taskType: new FormControl('', Validators.required),
-      });
+    });
+  }
+  ngOnInit(): void {
+
+    this.coursedatafun();
+    this.validations_form = this.formBuilder.group({
 
     });
-
   }
 
 

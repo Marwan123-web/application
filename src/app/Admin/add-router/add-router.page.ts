@@ -28,6 +28,7 @@ export class AddRouterPage implements OnInit {
       locationId.value = "";
       locationName.value = "";
       routerAddress.value = "";
+      this.validations_form.reset();
       this.navigateToRouters();
     }, err => {
       this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);

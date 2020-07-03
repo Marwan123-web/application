@@ -13,7 +13,7 @@
         </ion-title>
     </ion-toolbar>
 </ion-header>
-<ion-content class="ion-padding" id="assignments">
+<ion-content class="ion-padding" id="assignments" *ngIf='coursesdata'>
     <ion-list>
         <ion-item *ngIf="coursesdata">
             <h1>{{coursesdata.courseName}}</h1>
@@ -22,7 +22,7 @@
             <h2> {{coursesemesterdata1.semester_time}} </h2>
         </ion-item>
     </ion-list>
-    <div *ngIf='coursesdata'>
+    <div>
         <ion-card *ngFor="let tasks of coursesemesterdata">
             <ion-list>
                 <ion-item color="none">
@@ -45,14 +45,18 @@
         </ion-card>
     </div>
     <ion-row *ngIf="hidebutton">
-        <ion-col size="6">
-            <ion-button id="assignments-addTaskBtn" type="submit" expand="block" *ngIf="isTeacher" (click)="addTask()" class="ionBtn ionBtn-success" value="addTask">
+        <ion-col size="6" *ngIf="coursesemesterdata1">
+            <ion-button id="assignments-addTaskBtn" type="submit" expand="block" *ngIf="isTeacher"
+                class="ionBtn ionBtn-success" value="addTask"
+                [routerLink]="['/course/semester/add-task',coursesdata.courseCode,coursesemesterdata1.semester_time]">
                 <ion-icon name="add" slot="start"></ion-icon>
                 {{ 'ADDTASK' | translate }}
             </ion-button>
         </ion-col>
-        <ion-col size="6">
-            <ion-button id="assignments-deleteTaskBtn" type="submit" (click)="deleteTask()" expand="block" *ngIf="isTeacher" class="ionBtn ionBtn-success" value="deleteTask">
+        <ion-col size="6" *ngIf="coursesemesterdata1">
+            <ion-button id="assignments-deleteTaskBtn" type="submit" expand="block" *ngIf="isTeacher"
+                class="ionBtn ionBtn-danger" value="deleteTask"
+                [routerLink]="['/course/semester/delete-task',coursesdata.courseCode,coursesemesterdata1.semester_time]">
                 <ion-icon name="trash" slot="start"></ion-icon>
                 {{ 'DELETETASK' | translate }}
             </ion-button>

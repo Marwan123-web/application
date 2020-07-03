@@ -326,15 +326,21 @@ const routes: Routes = [
   },
   {
     path: 'routers',
-    loadChildren: () => import('./Admin/routers/routers.module').then(m => m.RoutersPageModule)
+    loadChildren: () => import('./Admin/routers/routers.module').then(m => m.RoutersPageModule),
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Admin] }
   },
   {
     path: 'routers/add-router',
-    loadChildren: () => import('./Admin/add-router/add-router.module').then(m => m.AddRouterPageModule)
+    loadChildren: () => import('./Admin/add-router/add-router.module').then(m => m.AddRouterPageModule),
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Admin] }
   },
   {
     path: 'routers/manage-router',
-    loadChildren: () => import('./Admin/manage-router/manage-router.module').then(m => m.ManageRouterPageModule)
+    loadChildren: () => import('./Admin/manage-router/manage-router.module').then(m => m.ManageRouterPageModule),
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Admin] }
   },
 
 

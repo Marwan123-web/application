@@ -18,14 +18,14 @@ export class manageUserPage implements OnInit {
   role: string;
   roles: Array<string>;
   type: any;
-  selectedLanguage:string;
+  selectedLanguage: string;
   validations_form: FormGroup;
   constructor(private adminservices: AdminservicesService, private alertservice: AlertService, private formBuilder: FormBuilder,
-    private translateConfigService: TranslateConfigService, private _router: Router) { 
-      this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
-    }
+    private translateConfigService: TranslateConfigService, private _router: Router) {
+    this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
+  }
 
-    onSelectChange(event: any) {
+  onSelectChange(event: any) {
     //update the ui
     this.role = event.target.value;
   }
@@ -38,6 +38,8 @@ export class manageUserPage implements OnInit {
       email.value = "";
       password.value = "";
       this.type = null;
+      this.validations_form.reset();
+
       this.navigateToUsers();
     }, err => {
       this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
@@ -45,7 +47,7 @@ export class manageUserPage implements OnInit {
     );
 
   }
-  
+
   deleteUser(id: HTMLInputElement) {
     this._id = id.value;
     let response = document.getElementById('response');
@@ -53,6 +55,7 @@ export class manageUserPage implements OnInit {
     this.adminservices.deleteUser(this._id).subscribe(res => {
       this.alertservice.showAlert("&#xE876;", "success", res.msg);
       id.value = '';
+      this.validations_form.reset();
       this.navigateToUsers();
     }, err => {
       this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
@@ -61,17 +64,17 @@ export class manageUserPage implements OnInit {
 
   }
 
-  navigateToUsers(){
+  navigateToUsers() {
     this._router.navigate(['/users']);
   }
 
-  languageChanged(){
+  languageChanged() {
     this.translateConfigService.setLanguage(this.selectedLanguage);
   }
 
-  static validID(fc: FormControl){
+  static validID(fc: FormControl) {
 
-    if(fc.value.toLowerCase() === "abc123" || fc.value.toLowerCase() === "123abc"){
+    if (fc.value.toLowerCase() === "abc123" || fc.value.toLowerCase() === "123abc") {
       return {
         validID: true
       };

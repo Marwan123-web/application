@@ -101,10 +101,10 @@
                 </ion-button>
             </div>
             <div *ngIf="isStudent">
-                <ion-button id="courses-deleteCourseGradeBtn" type="submit" expand="block" class="ionBtn ionBtn-danger"
+                <ion-button id="courses-deleteCourseGradeBtn" type="submit" expand="block" class="ionBtn ionBtn-success"
                     [routerLink]="['/course/semester/mygrades',coursedata.courseCode,coursesemesterdata.semester_time]"
                     value="deleteCourseGrade">
-                    <ion-icon name="trash" slot="start"></ion-icon>
+                    <ion-icon name="document-outline" slot="start"></ion-icon>
                     {{ 'MYGRADES' | translate }}
                 </ion-button>
             </div>
@@ -136,7 +136,7 @@
                 <ion-button id="courses-deleteCourseGradeBtn" type="submit" expand="block" class="ionBtn ionBtn-danger"
                     [routerLink]="['/course/semester/attendance-sheet',coursedata.courseCode,coursesemesterdata.semester_time]"
                     value="deleteCourseGrade">
-                    <ion-icon name="trash" slot="start"></ion-icon>
+                    <ion-icon name="person-outline" slot="start"></ion-icon>
                     {{ 'MYATTENDANCESHEET' | translate }}
                 </ion-button>
             </div>

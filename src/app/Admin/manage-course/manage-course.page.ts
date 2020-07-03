@@ -18,32 +18,45 @@ export class manageCoursePage implements OnInit {
   departments: Array<string>;
   creditHours: any;
   prerequisite: string;
-  selectedLanguage:string;
+  selectedLanguage: string;
   validations_form: FormGroup;
-  constructor(private adminservices: AdminservicesService, private alertservice: AlertService,  private formBuilder: FormBuilder,
+  coursedata: any;
+  prerequisiteName: any;
+  constructor(private adminservices: AdminservicesService, private alertservice: AlertService, private formBuilder: FormBuilder,
     private translateConfigService: TranslateConfigService, private _router: Router) {
-      this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
-     }
+    this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
+  }
 
   onSelectChange(event: any) {
     //update the ui
     this.courseDepartment = event.target.value;
   }
-  updateCourse(courseCode: HTMLInputElement, courseName: HTMLInputElement , creaditHours: HTMLInputElement, prerequisite: HTMLInputElement) {
-    this.courseCode = courseCode.value, this.courseName = courseName.value , this.creditHours = creaditHours.value, this.prerequisite = prerequisite.value;
-    this.adminservices.updateCourse(this.courseCode, this.courseName, this.courseDepartment, this.creditHours, this.prerequisite).subscribe(res => {
-      this.alertservice.showAlert("&#xE876;", "success", res.msg);
-      courseCode.value = "";
-      courseName.value = "";
-      creaditHours.value = "";
-      prerequisite.value = "";
-      this.department = null;
-      this.navigateToCourses();
-    }, err => {
-      this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
+  onSelectChange2(event: any) {
+    //update the ui
+    this.prerequisiteName = event.target.value;
+  }
+  updateCourse(courseCode: HTMLInputElement, courseName: HTMLInputElement, creaditHours: HTMLInputElement) {
+    if (this.courseDepartment == undefined) {
+      this.alertservice.showAlert("&#xE5CD;", "error", 'Please Select Course Department');
     }
-    );
-
+    else if (this.prerequisiteName == undefined) {
+      this.alertservice.showAlert("&#xE5CD;", "error", 'Please Select Prerequisite Course');
+    }
+    else {
+      this.courseCode = courseCode.value, this.courseName = courseName.value, this.creditHours = creaditHours.value;
+      this.adminservices.updateCourse(this.courseCode, this.courseName, this.courseDepartment, this.creditHours, this.prerequisiteName).subscribe(res => {
+        this.alertservice.showAlert("&#xE876;", "success", res.msg);
+        courseCode.value = "";
+        courseName.value = "";
+        creaditHours.value = "";
+        this.department = null;
+        this.validations_form.reset();
+        this.navigateToCourses();
+      }, err => {
+        this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
+      }
+      );
+    }
   }
 
   deleteCourse(courseCode: HTMLInputElement) {
@@ -51,25 +64,33 @@ export class manageCoursePage implements OnInit {
     this.adminservices.deleteCourse(this.courseCode).subscribe(res => {
       this.alertservice.showAlert("&#xE876;", "success", res.msg);
       courseCode.value = '';
+      this.validations_form.reset();
       this.navigateToCourses();
     }, err => {
       this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
     }
     );
+
   }
 
 
-  navigateToCourses(){
+  navigateToCourses() {
     this._router.navigate(['/courses']);
   }
 
-  languageChanged(){
+  languageChanged() {
     this.translateConfigService.setLanguage(this.selectedLanguage);
   }
+  getCourses() {
+    this.adminservices.getCourses().subscribe(res => {
+      this.coursedata = res;
+    }, err => {
+      this.coursedata = err;
+    });
+  }
+  static validCourseCode(fc: FormControl) {
 
-  static validCourseCode(fc: FormControl){
-
-    if(fc.value.toLowerCase() === "abc123" || fc.value.toLowerCase() === "123abc"){
+    if (fc.value.toLowerCase() === "abc123" || fc.value.toLowerCase() === "123abc") {
       return {
         validCourseCode: true
       };
@@ -82,6 +103,8 @@ export class manageCoursePage implements OnInit {
 
 
   ngOnInit(): void {
+    this.getCourses();
+
     this.departments = [
       "student",
       "professor",
@@ -102,7 +125,6 @@ export class manageCoursePage implements OnInit {
         Validators.min(0),
         Validators.required
       ])),
-      prerequisite: new FormControl('', Validators.required),
     });
 
 
@@ -124,9 +146,6 @@ export class manageCoursePage implements OnInit {
       { type: 'min', message: 'Credit Hours must be at least 0 Hours.' },
       { type: 'max', message: 'Credit Hours cannot be more than 140 Hours.' },
     ],
-    'prerequisite': [
-      { type: 'required', message: 'Name is required.' }
-    ]
 
   };
 

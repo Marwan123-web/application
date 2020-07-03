@@ -79,7 +79,6 @@ export class studentsGradePage implements OnInit {
       this.semester_time = params.get('semester_time');
       this.adminservices.getCourseSemesterData(this.courseCode, this.semester_time).subscribe(res => {
         this.coursedata = res.findsemesterdata.semesters[0].grades;
-
         this.courseDataCode = res.findsemesterdata;
         this.courseSemesterDataCode = res.findsemesterdata.semesters[0];
         this.checkSemesterStatus = this.courseSemesterDataCode.semester_status;
@@ -148,27 +147,5 @@ export class studentsGradePage implements OnInit {
 
   }
 
-  addStudentGrade() {
-    this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this.courseCode = params.get('courseCode');
-      this.semester_time = params.get('semester_time');
-      this._router.navigate(['/course/semester/add-student-grade/' + this.courseCode, this.semester_time])
-    });
-  }
-  updateStudentGrade() {
-    this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this.courseCode = params.get('courseCode');
-      this.semester_time = params.get('semester_time');
-      this._router.navigate(['/course/semester/update-student-grade/' + this.courseCode, this.semester_time])
-    });
 
-  }
-  gradesReport() {
-    this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this.courseCode = params.get('courseCode');
-      this.semester_time = params.get('semester_time');
-      this._router.navigate(['/course/semester/students-grades-report/' + this.courseCode, this.semester_time])
-    });
-
-  }
 }

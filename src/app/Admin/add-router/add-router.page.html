@@ -15,7 +15,7 @@
 </ion-header>
 <!-- [formGroup]="validations_form" -->
 <ion-content class="ion-padding" id="add-router">
-  <form id="addrouter-form" (ngSubmit)="addRouter(locationId,locationName, routerAddress)">
+  <form id="addrouter-form"[formGroup]="validations_form" (ngSubmit)="addRouter(locationId,locationName, routerAddress)">
     <ion-list id="addrouter-info">
       <ion-item id="addrouter-locationId">
         <ion-label>

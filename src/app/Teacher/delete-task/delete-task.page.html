@@ -20,14 +20,16 @@
                 <ion-label>
                     {{ 'TASKS' | translate }}
                 </ion-label>
-                <ion-select [(ngModel)]="task" [ngModelOptions]="{standalone: true}" slot="end" formControlName="taskType" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="{{ 'SELECTTASK' | translate }}" id='taskType' (ionChange)="onSelectChange($event)"
+                <ion-select [(ngModel)]="task" [ngModelOptions]="{standalone: true}" slot="end"
+                    [interfaceOptions]="customPopoverOptions" interface="popover"
+                    placeholder="{{ 'SELECTTASK' | translate }}" id='taskType' (ionChange)="onSelectChange($event)"
                     #taskType aria-required="required">
                     <ion-select-option *ngFor="let tasks of coursesemesterdata">{{tasks.type}}</ion-select-option>
                 </ion-select>
             </ion-item>
         </ion-list>
-        <!-- [disabled]="!validations_form.valid" -->
-        <ion-button id="deleteTask-deleteTaskBtn" type="submit" expand="block" class="ionBtn ionBtn-danger" value="deleteTask">
+        <ion-button id="deleteTask-deleteTaskBtn" type="submit" expand="block" class="ionBtn ionBtn-danger"
+            value="deleteTask">
             <ion-icon name="trash" slot="start"></ion-icon>
             {{ 'DELETETASK' | translate }}
         </ion-button>

@@ -57,29 +57,38 @@ export class addUserCoursePage implements OnInit {
     });
   }
   addUserCourse() {
-    this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this._id = params.get('id');
-      this.adminservices.addUserCourse(this._id, this.course, this.currentUser._id).subscribe(res => {
-        this.alertservice.showAlert(res.icon, res.style, res.msg);
-        this.courses = null;
-        this.navigateToUserCourses();
-      }, err => {
-        this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
-      }
-      );
-    });
+    if (this.course == undefined) {
+      this.alertservice.showAlert("&#xE5CD;", "error", 'Please Select Course');
+    }
+    else {
+      this.sub = this._Activatedroute.paramMap.subscribe(params => {
+        this._id = params.get('id');
+        this.adminservices.addUserCourse(this._id, this.course, this.currentUser._id).subscribe(res => {
+          this.alertservice.showAlert(res.icon, res.style, res.msg);
+          this.courses = null;
+          this.navigateToUserCourses();
+        }, err => {
+          this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
+        }
+        );
+      });
+    }
   }
   deleteUserCourse() {
-
-    this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this._id = params.get('id');
-      this.adminservices.deleteUserCourse(this._id, this.course).subscribe(res => {
-        this.alertservice.showAlert(res.icon, res.style, res.msg);
-      }, err => {
-        this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
-      }
-      );
-    });
+    if (this.course == undefined) {
+      this.alertservice.showAlert("&#xE5CD;", "error", 'Please Select Course');
+    }
+    else {
+      this.sub = this._Activatedroute.paramMap.subscribe(params => {
+        this._id = params.get('id');
+        this.adminservices.deleteUserCourse(this._id, this.course).subscribe(res => {
+          this.alertservice.showAlert("&#xE876;", "success", res.msg);
+        }, err => {
+          this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
+        }
+        );
+      });
+    }
   }
   goBack() {
     window.history.back();
@@ -96,9 +105,6 @@ export class addUserCoursePage implements OnInit {
     }
     );
 
-    this.validations_form = this.formBuilder.group({
-      courses: new FormControl('', Validators.required),
-    });
 
 
   }

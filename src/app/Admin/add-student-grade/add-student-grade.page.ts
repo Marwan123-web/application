@@ -9,7 +9,6 @@ import { SemesterserviceService } from 'src/app/services/semesterservice.service
 import { AlertService } from 'src/app/services/alert.service';
 import { TranslateConfigService } from 'src/app/services/translate-config.service';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-add-student-grade',
@@ -26,7 +25,7 @@ export class addStudentGradePage implements OnInit {
   coursedata: any;
   gradeType: any;
   studentId: any;
-  types: Array<string>;
+  // types: Array<string>;
   score: any;
   coursesemesterdata: any;
   coursaSemesterGrades: any;
@@ -41,7 +40,6 @@ export class addStudentGradePage implements OnInit {
     private semesterserviceService: SemesterserviceService,
     private alertservice: AlertService,
     private translateConfigService: TranslateConfigService,
-    private location: Location
   ) {
     this.currentClickedUser = this.userserviceService.currentClickedUserValue;
     this.currentCourse = this.courseService.currentCourseValue;
@@ -55,24 +53,30 @@ export class addStudentGradePage implements OnInit {
     this.gradeType = event.target.value;
   }
   addStudentGrade(studentId: HTMLInputElement, score: HTMLInputElement) {
-    this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this.courseCode = params.get('courseCode');
-      this.semester_time = params.get('semester_time');
+    if (this.gradeType == undefined) {
+      this.alertservice.showAlert("&#xE5CD;", "error", 'Please Select Grade Type');
+    }
+    else {
+      this.sub = this._Activatedroute.paramMap.subscribe(params => {
+        this.courseCode = params.get('courseCode');
+        this.semester_time = params.get('semester_time');
 
-      this.studentId = studentId.value, this.score = score.value;
-      this.adminservices.addSemesterStudentGrade(this.courseCode, this.studentId, this.semester_time, this.gradeType, this.score).subscribe(res => {
-        this.alertservice.showAlert("&#xE876;", "success", res.msg);
-        studentId.value = "";
-        score.value = "";
-        this.gradeType = null;
-        this.navigateToStudentsGrades();
-      }, err => {
-        this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
-      }
-      );
-    });
+        this.studentId = studentId.value, this.score = score.value;
+        this.adminservices.addSemesterStudentGrade(this.courseCode, this.studentId, this.semester_time, this.gradeType, this.score).subscribe(res => {
+          this.alertservice.showAlert("&#xE876;", "success", res.msg);
+          studentId.value = "";
+          score.value = "";
+          this.gradeType = null;
+          this.validations_form.reset();
 
-  };
+          this.navigateToStudentsGrades();
+        }, err => {
+          this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
+        });
+      });
+    }
+
+  }
   navigateToStudentsGrades() {
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       this.courseCode = params.get('courseCode');
@@ -83,16 +87,20 @@ export class addStudentGradePage implements OnInit {
   languageChanged() {
     this.translateConfigService.setLanguage(this.selectedLanguage);
   }
+  getcoursegrades() {
+    this.sub = this._Activatedroute.paramMap.subscribe(params => {
+      this.courseCode = params.get('courseCode');
+      this.semester_time = params.get('semester_time');
+      this.adminservices.getCourseSemesterData(this.courseCode, this.semester_time).subscribe(res => {
+        this.coursedata = res.findsemesterdata.semesters[0];
+      }, err => {
+        this.coursedata = err;
+      }
+      );
+    });
+  }
+
   ngOnInit(): void {
-    this.types = [
-      "Assignment",
-      "Quiz 1",
-      "Quiz 2",
-      "Quiz 3",
-      "Midterm",
-      "Practice",
-      "Final"
-    ];
 
     this.validations_form = this.formBuilder.group({
       id: new FormControl('', Validators.compose([
@@ -102,30 +110,13 @@ export class addStudentGradePage implements OnInit {
         Validators.min(20201800),
         Validators.required
       ])),
-      gradetype: new FormControl(this.types[0], Validators.required),
       grade: new FormControl('', Validators.compose([
         Validators.max(100),
         Validators.min(0),
         Validators.required
       ])),
     });
-    this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this.courseCode = params.get('courseCode');
-      this.semester_time = params.get('semester_time');
-      this.adminservices.getCourseData(this.courseCode).subscribe(res => {
-        this.coursedata = res.course;
-      }, err => {
-        this.coursedata = err;
-      }
-      );
-      this.adminservices.getCourseSemesterData(this.courseCode, this.semester_time).subscribe(res => {
-        this.coursesemesterdata = res.findsemesterdata.semesters[0];
-        this.coursaSemesterGrades = res.findsemesterdata.semesters[0].grades;
-      }, err => {
-        this.coursesemesterdata = err;
-      }
-      );
-    });
+    this.getcoursegrades();
 
   }
 

@@ -19,47 +19,53 @@ export class addUserPage implements OnInit {
   roles: Array<string>;
   type: any;
   dataOfJoin: any;
-  selectedLanguage:string;
+  selectedLanguage: string;
   validations_form: FormGroup;
   // id, name, email, password
   constructor(private adminservices: AdminservicesService, private alertservice: AlertService, private formBuilder: FormBuilder,
     private translateConfigService: TranslateConfigService, private _router: Router
-    ) {
-      this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
-     }
+  ) {
+    this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
+  }
 
   onSelectChange(event: any) {
     //update the ui
     this.role = event.target.value;
   }
   addUser(id: HTMLInputElement, name: HTMLInputElement, email: HTMLInputElement, password: HTMLInputElement) {
-    this._id = id.value, this.name = name.value, this.email = email.value, this.password = password.value;
-    this.dataOfJoin = new Date().toISOString().replace('-', '/').split('T')[0].replace('-', '/');
-    this.adminservices.addUser(this._id, this.name, this.email, this.password, this.role,this.dataOfJoin).subscribe(res => {
-      this.alertservice.showAlert("&#xE876;", "success", res.msg);
-      id.value = "";
-      name.value = "";
-      email.value = "";
-      password.value = "";
-      this.type = null;
-      this.navigateToUsers();
-    }, err => {
-      this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
+    if (this.type == undefined) {
+      this.alertservice.showAlert("&#xE5CD;", "error", 'Please Select User Type');
     }
-    );
+    else {
+      this._id = id.value, this.name = name.value, this.email = email.value, this.password = password.value;
+      this.dataOfJoin = new Date().toISOString().replace('-', '/').split('T')[0].replace('-', '/');
+      this.adminservices.addUser(this._id, this.name, this.email, this.password, this.role, this.dataOfJoin).subscribe(res => {
+        this.alertservice.showAlert("&#xE876;", "success", res.msg);
+        id.value = "";
+        name.value = "";
+        email.value = "";
+        password.value = "";
+        this.type = null;
+        this.validations_form.reset();
+        this.navigateToUsers();
+      }, err => {
+        this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
+      }
+      );
+    }
   }
-  
-  navigateToUsers(){
+
+  navigateToUsers() {
     this._router.navigate(['/users']);
   }
 
-  languageChanged(){
+  languageChanged() {
     this.translateConfigService.setLanguage(this.selectedLanguage);
   }
 
-  static validID(fc: FormControl){
+  static validID(fc: FormControl) {
 
-    if(fc.value.toLowerCase() === "abc123" || fc.value.toLowerCase() === "123abc"){
+    if (fc.value.toLowerCase() === "abc123" || fc.value.toLowerCase() === "123abc") {
       return {
         validID: true
       };

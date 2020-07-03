@@ -67,7 +67,8 @@ export class addTaskPage implements OnInit {
         this.alertservice.showAlert("&#xE876;", "success", res.msg);
         taskType.value = "";
         taskPath.value = "";
-        // this.navigateTo();
+        this.validations_form.reset();
+        this.navigateToAssigments();
       }, err => {
         this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
       }
@@ -76,8 +77,12 @@ export class addTaskPage implements OnInit {
 
   }
 
-  navigateTo() {
-    this.router.navigate(['/courses']);
+  navigateToAssigments() {
+    this.sub = this._Activatedroute.paramMap.subscribe(params => {
+      this.courseCode = params.get('courseCode');
+      this.semester_time = params.get('semester_time');
+      this.router.navigate(['/course/semester/assignments/' + this.courseCode, this.semester_time])
+    });
   }
 
   languageChanged() {
