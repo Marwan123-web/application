@@ -870,7 +870,38 @@ exports.updateSemesterGrade = async (req, res, next) => { //[]
     }
 
 }
+exports.changeCourseAttendanceStatus = async (req, res, next) => { //[]
+    let code = req.params.courseCode;
+    let attendance_status = req.params.status
+    try {
+        let checkforcourse = await Course.findOne({
+            courseCode: code
+        });
+        if (!checkforcourse) {
+            return res.status(400).json({
+                icon: '&#xE5CD;',
+                style: 'error',
+                msg: "Course Not Found"
+            });
+        } else {
+            adminService.updateCourseAttendanceStatus(code, attendance_status).then((change) => {
+                if (change) { 
+                    res.status(201).json({ msg: "Course Attendance" + " " + attendance_status + " " + "Successfuly" });
+                } else {
+                    res.status(404).json({ msg: "Can't Change Course Attendance Status" });
+                }
+            }).catch(err => {
+                console.log(err);
+                res.status(500).json({ msg: 'Internal Server Error' });
+            })
+        }
 
+
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Error in updating");
+    }
+}
 
 exports.changeCourseStatus = async (req, res, next) => { //[]
     let code = req.params.courseCode;

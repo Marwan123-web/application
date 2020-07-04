@@ -30,6 +30,16 @@
                 <h2 *ngIf="coursesemesterdata">{{coursesemesterdata.semester_time}}</h2>
             </ion-label>
         </ion-item>
+        <ion-item id="courses-semesters-info-attendancestatus" *ngIf="isTeacher">
+            <ion-label *ngIf="coursesemesterdata">
+                <p>{{ 'ATTENDANCESTATUS' | translate }}</p>
+                <ion-button id="courses-semesters-info-statusBtn" color="{{this.color}}" value="View" class="ionBtn"
+                    style="width: 150px;" (click)="activeAlertConfirm()">
+                    <ion-icon name="checkmark-circle-outline" slot="start" position="fixed"></ion-icon>
+                    {{coursesemesterdata.attendance_status}}
+                </ion-button>
+            </ion-label>
+        </ion-item>
     </ion-list>
     <ion-item>
         <ion-label>
@@ -93,7 +103,8 @@
         </ion-row>
         <div *ngIf="coursesemesterdata">
             <div *ngIf="isTeacherOrStudent">
-                <ion-button id="courses-deleteCourseGradeBtn" type="submit" expand="block" class="ionBtn ionBtn-secondry"
+                <ion-button id="courses-deleteCourseGradeBtn" type="submit" expand="block"
+                    class="ionBtn ionBtn-secondry"
                     [routerLink]="['/course/semester/assignments',coursedata.courseCode,coursesemesterdata.semester_time]"
                     value="deleteCourseGrade">
                     <ion-icon name="document-text-outline" slot="start"></ion-icon>
@@ -126,13 +137,17 @@
                 </ion-button>
             </div>
             <div *ngIf="isStudent">
-                <ion-button id="courses-addCourseGradeBtn" *ngIf="hidebutton" type="submit" expand="block"
-                    class="ionBtn ionBtn-success"
-                    [routerLink]="['/attend-me',coursedata.courseCode,coursesemesterdata.semester_time]"
-                    value="addCourseGrade">
-                    <ion-icon name="sync-outline" slot="start"></ion-icon>
-                    {{ 'ATTENDME' | translate }}
-                </ion-button>
+                <ion-row *ngIf="hideAttendancebutton">
+                    <ion-col size="12">
+                        <ion-button id="courses-addCourseGradeBtn" *ngIf="hidebutton" type="submit" expand="block"
+                            class="ionBtn ionBtn-success"
+                            [routerLink]="['/attend-me',coursedata.courseCode,coursesemesterdata.semester_time]"
+                            value="addCourseGrade">
+                            <ion-icon name="sync-outline" slot="start"></ion-icon>
+                            {{ 'ATTENDME' | translate }}
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
                 <ion-button id="courses-deleteCourseGradeBtn" type="submit" expand="block" class="ionBtn ionBtn-danger"
                     [routerLink]="['/course/semester/attendance-sheet',coursedata.courseCode,coursesemesterdata.semester_time]"
                     value="deleteCourseGrade">

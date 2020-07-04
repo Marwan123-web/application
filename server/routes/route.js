@@ -73,6 +73,10 @@ router.put('/update/course/semester/student/grade/:id/:courseCode/:semester', ad
 
 router.put('/change/course/status/:courseCode/:status', adminController.changeCourseStatus);
 
+router.put('/change/course/attendance/status/:courseCode/:status', adminController.changeCourseAttendanceStatus);
+
+
+
 router.put('/update/router/:locationId', adminController.updateRouter);
 
 // ----------------DELETE Requests----------------

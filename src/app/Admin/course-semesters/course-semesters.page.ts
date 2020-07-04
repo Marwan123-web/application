@@ -103,23 +103,8 @@ export class courseSemestersPage implements OnInit {
       this.changeto = "active"
       this.changecoursestatusService();
     }
-
-
   }
-  // closCourse() {
-  //   this.courseService.closeCourse();
-  // }
-  // openCourse(courseCode) {
-  //   this.courseService.getCourse(courseCode).pipe(first()).subscribe(res => {
-  //   }, err => {
-  //     console.log('Fail to get Course');
-  //   }
-  //   );
-  // }
 
-  // closSemester() {
-  //   this.semesterserviceService.closeSemester();
-  // }
   openSemester(courseCode, semester_time) {
     this._router.navigate(['/course/semester/info/' + courseCode, semester_time])
   }

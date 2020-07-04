@@ -138,7 +138,25 @@ class adminService {
             { multi: true }
         )
     }
+    static async updateCourseAttendanceStatus(courseCode, status) {
+        if (status == 'close') {
+            return await Course.findOne({ courseCode }, { semesters: { $elemMatch: { semester_status: 'open' } } })
+                .updateOne(
+                    { 'semesters.semester_status': "open" }, // your query, usually match by _id
+                    { $set: { 'semesters.$.attendance_status': "close" } }, // item(s) to match from array you want to pull/remove
+                    { multi: false } // set this to true if you want to remove multiple elements.
+                );
+        }
+        else if (status == 'open') {
+            return await Course.findOne({ courseCode }, { semesters: { $elemMatch: { semester_status: 'open' } } })
+                .updateOne(
+                    { 'semesters.semester_status': "open" }, // your query, usually match by _id
+                    { $set: { 'semesters.$.attendance_status': "open" } }, // item(s) to match from array you want to pull/remove
+                    { multi: false } // set this to true if you want to remove multiple elements.
+                );
+        }
 
+    }
     static async updateCourseStatus(courseCode, status) {
         if (status == 'disable') {
             await Course.findOne({ courseCode }, { semesters: { $elemMatch: { semester_status: 'open' } } })

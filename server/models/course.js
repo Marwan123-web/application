@@ -12,6 +12,7 @@ const courseSchema = mongoose.Schema({
     semesters: [{
         semester_time: { type: String },
         semester_status: { type: String, default: 'open', enum: ["open", "finished"] },
+        attendance_status: { type: String, default: 'open', enum: ["open", "close"] },
         grades: [{
             type: { type: String },
             grade: { type: Number }

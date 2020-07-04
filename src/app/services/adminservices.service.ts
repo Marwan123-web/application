@@ -236,7 +236,10 @@ export class AdminservicesService {
     return this.httpClient.get(`http://localhost:3000/course/semester/my/grades/${this.myId}/${this.CourseId}/${this.courseGradeType}/${semester_time}`);
   }
 
-
+  public changeCourseAttendanceStatus(courseCode, status): Observable<any> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
+    return this.httpClient.put(`http://localhost:3000/change/course/attendance/status/${courseCode}/${status}`, { headers: headers });
+  }
 
   public changeCourseStatus(courseCode, status): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });

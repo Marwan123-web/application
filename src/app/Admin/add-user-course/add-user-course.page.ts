@@ -64,7 +64,7 @@ export class addUserCoursePage implements OnInit {
       this.sub = this._Activatedroute.paramMap.subscribe(params => {
         this._id = params.get('id');
         this.adminservices.addUserCourse(this._id, this.course, this.currentUser._id).subscribe(res => {
-          this.alertservice.showAlert(res.icon, res.style, res.msg);
+          this.alertservice.showAlert("&#xE876;", "success", res.msg);
           this.courses = null;
           this.navigateToUserCourses();
         }, err => {

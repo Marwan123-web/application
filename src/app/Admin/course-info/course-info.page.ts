@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { NavController } from '@ionic/angular';
 
 import { AuthService } from 'src/app/services/auth.service';
+import { AlertController } from '@ionic/angular';
 
 import * as $ from 'jquery';
 import * as dt from 'node_modules/datatables.net';
@@ -34,17 +35,25 @@ export class courseInfoPage implements OnInit {
   checkcoursesemesterstatus: any;
   checkSemesterStatus: any;
   hidebutton: any;
+  statusbtn = document.getElementById("courses-semesters-info-statusBtn") as HTMLInputElement;
+  checkcourseattendance: any;
+  hideAttendancebutton: boolean;
+  color: any;
   constructor(private adminservices: AdminservicesService, private _Activatedroute: ActivatedRoute,
     private _router: Router,
     private authenticationService: AuthService,
     private translateConfigService: TranslateConfigService,
-    private http: HttpClient, public navCtrl: NavController
+    private http: HttpClient, public navCtrl: NavController,
+    public alertController: AlertController,
+
   ) {
     this.currentUser = this.authenticationService.currentUserValue;
 
     this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
   }
   sub: any;
+  changeto: string;
+  courseAttendanceStatusCahnge: any;
 
   get isAdmin() {
     return this.currentUser && this.currentUser.role === Role.Admin;
@@ -76,17 +85,22 @@ export class courseInfoPage implements OnInit {
   languageChanged() {
     this.translateConfigService.setLanguage(this.selectedLanguage);
   }
-
-  ngOnInit(): void {
-    $(document).ready(function () {
-      dt.$('#table_id').DataTable();
-    });
+  coursealldata() {
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       this.courseCode = params.get('courseCode');
       this.semester_time = params.get('semester_time');
 
       this.adminservices.getCourseSemesterData(this.courseCode, this.semester_time).subscribe(res => {
         this.coursesemesterdata = res.findsemesterdata.semesters[0];
+        this.checkcourseattendance = this.coursesemesterdata.attendance_status;
+        if (this.checkcourseattendance == "close") {
+          this.color = 'danger';
+          this.hideAttendancebutton = false;
+        }
+        else if (this.checkcourseattendance == "open") {
+          this.color = 'success';
+          this.hideAttendancebutton = true;
+        }
         this.coursaSemesterGrades = res.findsemesterdata.semesters[0].grades;
         this.checkSemesterStatus = this.coursesemesterdata.semester_status
         if (this.checkSemesterStatus == "finished") {
@@ -107,5 +121,77 @@ export class courseInfoPage implements OnInit {
       );
     });
   }
+  changeCourseAttendanceStatusService(changeto) {
+    this.sub = this._Activatedroute.paramMap.subscribe(params => {
+      this.courseCode = params.get('courseCode');
+      this.adminservices.changeCourseAttendanceStatus(this.courseCode, changeto).subscribe(res => {
+        this.courseAttendanceStatusCahnge = res;
+        this.coursealldata();
+      }, err => {
+        this.courseAttendanceStatusCahnge = err
+      }
+      );
+    });
+  }
 
+  ngOnInit(): void {
+    $(document).ready(function () {
+      dt.$('#table_id').DataTable();
+    });
+    this.coursealldata();
+  }
+
+  changecourseattendancestatusfun(status) {
+    if (status == "open") {
+      this.changeto = "close"
+      this.changeCourseAttendanceStatusService(this.changeto);
+    }
+    else if (status == "close") {
+      this.changeto = "open"
+      this.changeCourseAttendanceStatusService(this.changeto);
+    }
+  }
+  activeFinishedAlert() {
+    if (this.statusbtn.value == "open") {
+      this.activeAlertConfirm();
+    } else if (this.statusbtn.value == "close") {
+      this.finishedAlert();
+    }
+  }
+
+  async activeAlertConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirm!',
+      message: 'Are You Sure that you want to do this action?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            this.changecourseattendancestatusfun(this.coursesemesterdata.attendance_status);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async finishedAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Alert',
+      message: 'This semester are already finished!!',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
 }
