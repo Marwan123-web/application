@@ -14,7 +14,7 @@
     </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding" id="add-course-grade">
-    <form id="addCourseGrade-form" [formGroup]="validations_form" (ngSubmit)="addCourseGrade(grade)">
+    <form id="addCourseGrade-form" [formGroup]="validations_form" (ngSubmit)="addCourseGrade()">
         <ion-list id="addCourseGrade-info">
             <ion-item id="addCourseGrade-type">
                 <ion-label>
@@ -37,7 +37,7 @@
                 </ion-label>
             </ion-item>
             <ion-item id="addCourseGrade-gradeInput">
-                <ion-input type="number" min="0" max="100" formControlName="grade" value="" placeholder="Enter Grade" #grade required></ion-input>
+                <ion-input type="number" min="0" max="100" formControlName="grade" id="gradeinput" value="" placeholder="Enter Grade" #grade required></ion-input>
             </ion-item>
             <div class="validation-errors">
                 <ng-container *ngFor="let validation of validation_messages.grade">

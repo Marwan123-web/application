@@ -16,18 +16,18 @@ export class loginPage implements OnInit {
   Id: any;
   password: any;
   returnUrl: string;
-  selectedLanguage:string;
+  selectedLanguage: string;
   validations_form: FormGroup;
   constructor(private authservice: AuthService, private router: Router, private route: ActivatedRoute, private alertservice: AlertService,
     private translateConfigService: TranslateConfigService, private formBuilder: FormBuilder) {
-      this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
+    this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
     // get return url from route parameters or default to '/'
     if (this.authservice.currentUserValue) {
       this.router.navigate(['/home']);
     }
   }
 
-  languageChanged(){
+  languageChanged() {
     this.translateConfigService.setLanguage(this.selectedLanguage);
   }
 
@@ -49,9 +49,12 @@ export class loginPage implements OnInit {
         Validators.required,
       ])),
     });
-      
+
   }
-  loginUser(idinput: HTMLInputElement, passwordinput: HTMLInputElement) {
+
+  loginUser() {
+    let idinput = document.getElementById("idinput") as HTMLInputElement;
+    let passwordinput = document.getElementById("passwordinput") as HTMLInputElement;
     this.Id = idinput.value, this.password = passwordinput.value;
     this.authservice.login(this.Id, this.password).pipe(first()).subscribe(res => {
       this.alertservice.showAlert("&#xE876;", "success", "You have successfully logged in!");

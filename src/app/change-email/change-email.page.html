@@ -14,7 +14,7 @@
     </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding" id="change-email">
-    <form id="changeEmail-form" [formGroup]="validations_form" (ngSubmit)="changeEmail(email, confirm_email)">
+    <form id="changeEmail-form" [formGroup]="validations_form" (ngSubmit)="changeEmail()">
         <ion-list id="changeEmail-info">
             <div formGroupName="matching_emails">
                 <ion-item id="changeEmail-email">
@@ -23,7 +23,7 @@
                     </ion-label>
                 </ion-item>
                 <ion-item id="changeEmail-emailInput">
-                    <ion-input inputmode="email" formControlName="email" #email required></ion-input>
+                    <ion-input inputmode="email" formControlName="email" id="emailinput" #email required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                     <ng-container *ngFor="let validation of validation_messages.email">
@@ -38,7 +38,7 @@
                     </ion-label>
                 </ion-item>
                 <ion-item id="changeEmail-confirmEmailInput">
-                    <ion-input inputmode="email" formControlName="confirm_email" #confirm_email required></ion-input>
+                    <ion-input inputmode="email" formControlName="confirm_email" id="confirmemailinput" #confirm_email required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                     <ng-container *ngFor="let validation of validation_messages.confirm_email">

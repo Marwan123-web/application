@@ -16,6 +16,7 @@ export class SemesterserviceService {
     this.currentCourseSemesterSubject = new BehaviorSubject<Semester>(JSON.parse(localStorage.getItem('currentCourseSemester')));
     this.currentCourseSemester = this.currentCourseSemesterSubject.asObservable();
   }
+  url: any = "http://192.168.1.7:3000";
 
   public get currentCourseSemesterValue(): Semester {
     return this.currentCourseSemesterSubject.value;
@@ -24,7 +25,7 @@ export class SemesterserviceService {
   getCourseSemesterData(courseCode: string, semester_time: string) {
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
     this.courseId = courseCode;
-    return this.http.get<any>(`http://localhost:3000/course/semester/${courseCode}/${semester_time}`, { headers: headers })
+    return this.http.get<any>(`${this.url}/course/semester/${courseCode}/${semester_time}`, { headers: headers })
       .pipe(map(coursesemester => {
         // login successful if there's a jwt token in the response
         if (coursesemester) {

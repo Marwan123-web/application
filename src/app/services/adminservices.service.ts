@@ -50,110 +50,111 @@ export class AdminservicesService {
   updateRouterIdBody: any;
   updateRouterBody: any;
   deleterouterbody: any;
+  url: any = "http://192.168.1.7:3000";
 
   constructor(private httpClient: HttpClient) { }
 
   public profile(id): Observable<any> {
     this.userId = id;
-    return this.httpClient.get<User>(`http://localhost:3000/profile/${this.userId}`);
+    return this.httpClient.get<User>(`${this.url}/profile/${this.userId}`);
   }
 
   public getUsers(): Observable<any> {
-    return this.httpClient.get<User[]>('http://localhost:3000/users');
+    return this.httpClient.get<User[]>(`${this.url}/users`);
   }
   public getUsersByRole(role): Observable<any> {
     this.userRolebody = role;
-    return this.httpClient.get<User[]>(`http://localhost:3000/users/${this.userRolebody}`);
+    return this.httpClient.get<User[]>(`${this.url}/users/${this.userRolebody}`);
   }
 
   public addUser(_id, name, email, password, role, dataOfJoin): Observable<any> {
     this.addUserBody = { _id, name, email, password, role, dataOfJoin }
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.post('http://localhost:3000/add/user', this.addUserBody, { headers: headers });
+    return this.httpClient.post(`${this.url}/add/user`, this.addUserBody, { headers: headers });
   }
 
   public updateUser(_id, name, email, password, role): Observable<any> {
     this.updateuserIdbody = _id;
     this.updateuserbody = { name, email, password, role }
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.put(`http://localhost:3000/update/user/${this.updateuserIdbody}`, this.updateuserbody, { headers: headers });
+    return this.httpClient.put(`${this.url}/update/user/${this.updateuserIdbody}`, this.updateuserbody, { headers: headers });
   }
 
   public deleteUser(_id): Observable<any> {
     this.deleteuserbody = _id;
-    return this.httpClient.delete(`http://localhost:3000/delete/user/${this.deleteuserbody}`);
+    return this.httpClient.delete(`${this.url}/delete/user/${this.deleteuserbody}`);
   }
 
   public changeEmail(_id, email): Observable<any> {
     this.updateuserIdbody = _id;
     this.updateuserbody = { email }
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.put(`http://localhost:3000/update/user/${this.updateuserIdbody}`, this.updateuserbody, { headers: headers });
+    return this.httpClient.put(`${this.url}/update/user/${this.updateuserIdbody}`, this.updateuserbody, { headers: headers });
   }
 
   public changePassword(_id, password): Observable<any> {
     this.updateuserIdbody = _id;
     this.updateuserbody = { password }
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.put(`http://localhost:3000/update/user/${this.updateuserIdbody}`, this.updateuserbody, { headers: headers });
+    return this.httpClient.put(`${this.url}/update/user/${this.updateuserIdbody}`, this.updateuserbody, { headers: headers });
   }
 
   public getUserprofiledata(id): Observable<any> {
     this.userProfileBody = id;
-    return this.httpClient.get(`http://localhost:3000/user/${this.userProfileBody}/profile`);
+    return this.httpClient.get(`${this.url}/user/${this.userProfileBody}/profile`);
   }
 
   public getUserCoursesdata(id): Observable<any> {
     this.userCoursesBody = id;
-    return this.httpClient.get(`http://localhost:3000/user/${this.userCoursesBody}/courses`);
+    return this.httpClient.get(`${this.url}/user/${this.userCoursesBody}/courses`);
   }
 
   public addUserCourse(id, courseCode, sender): Observable<any> {
     this.addUserCourseBody = { courseCode };
     this.addUserCourseId = id;
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.post(`http://localhost:3000/add/user/course/${this.addUserCourseId}/${sender}`, this.addUserCourseBody, { headers: headers });
+    return this.httpClient.post(`${this.url}/add/user/course/${this.addUserCourseId}/${sender}`, this.addUserCourseBody, { headers: headers });
   }
 
   public deleteUserCourse(id, courseCode): Observable<any> {
     this.deleteUserCourseBody = courseCode;
     this.deleteUserCourseId = id;
-    return this.httpClient.delete(`http://localhost:3000/delete/user/course/${this.deleteUserCourseId}/${this.deleteUserCourseBody}`);
+    return this.httpClient.delete(`${this.url}/delete/user/course/${this.deleteUserCourseId}/${this.deleteUserCourseBody}`);
   }
   // ---------------------------------------------
 
 
   public getCourses(): Observable<any> {
-    return this.httpClient.get('http://localhost:3000/courses');
+    return this.httpClient.get(`${this.url}/courses`);
   }
   public getActiveCourses(): Observable<any> {
-    return this.httpClient.get('http://localhost:3000/courses/active');
+    return this.httpClient.get(`${this.url}/courses/active`);
   }
   public getCourseData(courseCode): Observable<any> {
     this.getCourseDataBody = courseCode
-    return this.httpClient.get(`http://localhost:3000/course/${this.getCourseDataBody}`);
+    return this.httpClient.get(`${this.url}/course/${this.getCourseDataBody}`);
   }
 
 
   public getDepartmentCourses(courseDepartment): Observable<any> {
     this.coursesDepartmentbody = courseDepartment;
-    return this.httpClient.get(`http://localhost:3000/courses/${this.coursesDepartmentbody}`);
+    return this.httpClient.get(`${this.url}/courses/${this.coursesDepartmentbody}`);
   }
 
 
   public addCourse(courseCode, courseName, courseDepartment, creaditHours, prerequisite): Observable<any> {
     this.addCourseBody = { courseCode, courseName, courseDepartment, creaditHours, prerequisite }
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.post('http://localhost:3000/add/course', this.addCourseBody, { headers: headers });
+    return this.httpClient.post('${this.url}/add/course', this.addCourseBody, { headers: headers });
   }
   public addCourseSemester(courseCode, semester_time): Observable<any> {
     this.addCourseSemesterBody = { semester_time }
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.post(`http://localhost:3000/add/course/semester/${courseCode}`, this.addCourseSemesterBody, { headers: headers });
+    return this.httpClient.post(`${this.url}/add/course/semester/${courseCode}`, this.addCourseSemesterBody, { headers: headers });
 
   }
   public getCourseSemesterData(courseCode, semester_time): Observable<any> {
-    return this.httpClient.get(`http://localhost:3000/course/semester/${courseCode}/${semester_time}`);
+    return this.httpClient.get(`${this.url}/course/semester/${courseCode}/${semester_time}`);
   }
 
 
@@ -161,12 +162,12 @@ export class AdminservicesService {
     this.updateCourseIdBody = courseCode;
     this.updateCourseBody = { courseName, courseDepartment, creaditHours, prerequisite }
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.put(`http://localhost:3000/update/course/${this.updateCourseIdBody}`, this.updateCourseBody, { headers: headers });
+    return this.httpClient.put(`${this.url}/update/course/${this.updateCourseIdBody}`, this.updateCourseBody, { headers: headers });
   }
 
   public deleteCourse(courseCode): Observable<any> {
     this.deleteCoursebody = courseCode;
-    return this.httpClient.delete(`http://localhost:3000/delete/course/${this.deleteCoursebody}`);
+    return this.httpClient.delete(`${this.url}/delete/course/${this.deleteCoursebody}`);
   }
 
 
@@ -175,31 +176,31 @@ export class AdminservicesService {
     this.addCourseGradeBody = { type, grade };
     this.addCourseGradeId = courseCode;
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.post(`http://localhost:3000/add/course/semester/grade/${this.addCourseGradeId}/${semester_time}`, this.addCourseGradeBody, { headers: headers });
+    return this.httpClient.post(`${this.url}/add/course/semester/grade/${this.addCourseGradeId}/${semester_time}`, this.addCourseGradeBody, { headers: headers });
   }
   public deleteCourseSemesterGrade(courseCode, semester_time, type): Observable<any> {
     this.deleteCourseGradebody = courseCode;
     this.deleteCourseGradetypebody = type;
-    return this.httpClient.delete(`http://localhost:3000/delete/course/semester/grade/${this.deleteCourseGradebody}/${semester_time}/${this.deleteCourseGradetypebody}`);
+    return this.httpClient.delete(`${this.url}/delete/course/semester/grade/${this.deleteCourseGradebody}/${semester_time}/${this.deleteCourseGradetypebody}`);
   }
 
   public getCourseSemesterStudentsSheet(courseCode, semester_time): Observable<any> {
     // this.courseStudentsSheetBody = courseCode;
-    return this.httpClient.get(`http://localhost:3000/course/semester/students/${courseCode}/${semester_time}`);
+    return this.httpClient.get(`${this.url}/course/semester/students/${courseCode}/${semester_time}`);
   }
 
   public addSemesterStudentGrade(courseCode, studentId, semester_time, gradeType, score): Observable<any> {
     this.addStudentGradeBody = { studentId, gradeType, score };
     this.addStudentGradeId = courseCode;
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.post(`http://localhost:3000/add/course/semester/student/grade/${this.addStudentGradeId}/${semester_time}`, this.addStudentGradeBody, { headers: headers });
+    return this.httpClient.post(`${this.url}/add/course/semester/student/grade/${this.addStudentGradeId}/${semester_time}`, this.addStudentGradeBody, { headers: headers });
   }
   public updateSemesterStudentGrade(courseId, studentId, semester_time, gradeType, score): Observable<any> {
     this.updateStudentGradeBody = { gradeType, score };
     this.studentIdBody = studentId;
     this.courseIdBody = courseId
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.put(`http://localhost:3000/update/course/semester/student/grade/${this.studentIdBody}/${this.courseIdBody}/${semester_time}`, this.updateStudentGradeBody, { headers: headers });
+    return this.httpClient.put(`${this.url}/update/course/semester/student/grade/${this.studentIdBody}/${this.courseIdBody}/${semester_time}`, this.updateStudentGradeBody, { headers: headers });
   }
 
 
@@ -207,71 +208,71 @@ export class AdminservicesService {
     this.gradeType = gradeType;
     this.CourseId = courseCode;
     this.studentIdBodyBody = studentId;
-    return this.httpClient.get(`http://localhost:3000/course/semester/grade/sheet/${this.studentIdBodyBody}/${this.CourseId}/${this.gradeType}/${semester_time}`);
+    return this.httpClient.get(`${this.url}/course/semester/grade/sheet/${this.studentIdBodyBody}/${this.CourseId}/${this.gradeType}/${semester_time}`);
   }
   public semesterStudentTotalGrades(studentId, courseCode, semester_time): Observable<any> {
     this.CourseId = courseCode;
     this.studentIdBodyBody = studentId;
-    return this.httpClient.get(`http://localhost:3000/course/semester/student/total/grade/${this.studentIdBodyBody}/${this.CourseId}/${semester_time}`);
+    return this.httpClient.get(`${this.url}/course/semester/student/total/grade/${this.studentIdBodyBody}/${this.CourseId}/${semester_time}`);
   }
   public totalCourseSemesterGrades(courseCode, semester_time): Observable<any> {
     this.CourseId = courseCode;
-    return this.httpClient.get(`http://localhost:3000/course/semester/total/grades/${this.CourseId}/${semester_time}`);
+    return this.httpClient.get(`${this.url}/course/semester/total/grades/${this.CourseId}/${semester_time}`);
   }
 
 
   public myCourses(id): Observable<any> {
     this.userId = id;
-    return this.httpClient.get(`http://localhost:3000/my/courses/${this.userId}`);
+    return this.httpClient.get(`${this.url}/my/courses/${this.userId}`);
   }
   public myCoursesByStatus(id, status): Observable<any> {
     this.userId = id;
-    return this.httpClient.get(`http://localhost:3000/my/courses/bystatus/${this.userId}/${status}`);
+    return this.httpClient.get(`${this.url}/my/courses/bystatus/${this.userId}/${status}`);
   }
   public getMyCourseSemesterGrades(id, courseCode, semester_time, gradetype): Observable<any> {
     this.CourseId = courseCode;
     this.myId = id;
     this.courseGradeType = gradetype;
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.get(`http://localhost:3000/course/semester/my/grades/${this.myId}/${this.CourseId}/${this.courseGradeType}/${semester_time}`);
+    return this.httpClient.get(`${this.url}/course/semester/my/grades/${this.myId}/${this.CourseId}/${this.courseGradeType}/${semester_time}`);
   }
 
   public changeCourseAttendanceStatus(courseCode, status): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.put(`http://localhost:3000/change/course/attendance/status/${courseCode}/${status}`, { headers: headers });
+    return this.httpClient.put(`${this.url}/change/course/attendance/status/${courseCode}/${status}`, { headers: headers });
   }
 
   public changeCourseStatus(courseCode, status): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.put(`http://localhost:3000/change/course/status/${courseCode}/${status}`, { headers: headers });
+    return this.httpClient.put(`${this.url}/change/course/status/${courseCode}/${status}`, { headers: headers });
   }
 
   public decideStudentsPassOrFail(courseCode): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.put(`http://localhost:3000/change/student/course/status/${courseCode}`, { headers: headers });
+    return this.httpClient.put(`${this.url}/change/student/course/status/${courseCode}`, { headers: headers });
   }
   public calculatMyCreditHours(id): Observable<any> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.put(`http://localhost:3000/calculate/my/credit/hours/${id}`, { headers: headers });
+    return this.httpClient.put(`${this.url}/calculate/my/credit/hours/${id}`, { headers: headers });
   }
 
   public getRouters(): Observable<any> {
-    return this.httpClient.get(`http://localhost:3000/routers`);
+    return this.httpClient.get(`${this.url}/routers`);
   }
   public addRouter(locationId, locationName, routerAddress): Observable<any> {
     this.addRouterBody = { locationId, locationName, routerAddress }
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.post('http://localhost:3000/add/router', this.addRouterBody, { headers: headers });
+    return this.httpClient.post(`${this.url}/add/router`, this.addRouterBody, { headers: headers });
   }
   public updateRouter(locationId, locationName, routerAddress): Observable<any> {
     this.updateRouterIdBody = locationId;
     this.updateRouterBody = { locationName, routerAddress }
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.put(`http://localhost:3000/update/router/${this.updateRouterIdBody}`, this.updateRouterBody, { headers: headers });
+    return this.httpClient.put(`${this.url}/update/router/${this.updateRouterIdBody}`, this.updateRouterBody, { headers: headers });
   }
 
   public deleteRouter(locationId): Observable<any> {
     this.deleterouterbody = locationId;
-    return this.httpClient.delete(`http://localhost:3000/delete/router/${this.deleterouterbody}`);
+    return this.httpClient.delete(`${this.url}/delete/router/${this.deleterouterbody}`);
   }
 }

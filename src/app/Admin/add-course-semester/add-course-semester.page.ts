@@ -32,6 +32,8 @@ export class addCourseSemesterPage implements OnInit {
   selectedLanguage: string;
   validations_form: FormGroup;
   courseCode: string;
+  customPopoverOptions: any;
+  customPickerOptions: any;
   constructor(private adminservices: AdminservicesService, private _Activatedroute: ActivatedRoute, private formBuilder: FormBuilder,
     private _router: Router,
     private userserviceService: UserserviceService,
@@ -50,7 +52,9 @@ export class addCourseSemesterPage implements OnInit {
     //update the ui
     this.courseSemester = event.target.value;
   }
-  addCourseSemester(year: HTMLInputElement,) {
+  addCourseSemester() {
+    let year = document.getElementById("yearinput") as HTMLInputElement;
+
     if (this.courseSemester == undefined) {
       this.alertservice.showAlert("&#xE5CD;", "error", 'Please Select Semester');
     }

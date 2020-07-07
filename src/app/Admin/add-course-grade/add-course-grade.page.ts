@@ -29,6 +29,7 @@ export class addCourseGradePage implements OnInit {
   selectedLanguage: string;
   validations_form: FormGroup;
   courseCode: string;
+  customPopoverOptions: any;
   constructor(private adminservices: AdminservicesService, private _Activatedroute: ActivatedRoute, private formBuilder: FormBuilder,
     private _router: Router,
     private userserviceService: UserserviceService,
@@ -49,7 +50,9 @@ export class addCourseGradePage implements OnInit {
     this.type = event.target.value;
   }
 
-  addCourseGrade(grade: HTMLInputElement) {
+  addCourseGrade() {
+    let grade = document.getElementById("gradeinput") as HTMLInputElement;
+
     if (this.type == undefined) {
       this.alertservice.showAlert("&#xE5CD;", "error", 'Please Select Grade Type');
     }

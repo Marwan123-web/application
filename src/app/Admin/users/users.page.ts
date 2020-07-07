@@ -29,6 +29,8 @@ export class usersPage implements OnInit {
   role: any;
   selectedLanguage: string;
   sub: any;
+  customPopoverOptions: any;
+  users: any;
   constructor(private adminservices: AdminservicesService, private _Activatedroute: ActivatedRoute,
     private _router: Router,
     private userserviceService: UserserviceService,

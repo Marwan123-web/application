@@ -20,9 +20,8 @@
             <ion-label>
                 {{ 'COURSES' | translate }}
             </ion-label>
-            <ion-select [(ngModel)]="courses" [ngModelOptions]="{standalone: true}" slot="end"
-                [interfaceOptions]="customPopoverOptions" interface="popover" id='department'
-                (ionChange)="onSelectChange($event)">
+            <ion-select placeholder="All Courses" [ngModelOptions]="{standalone: true}" slot="end" interface="popover"
+                id='department' (ionChange)="onSelectChange($event)">
                 <ion-select-option value="">{{ 'ALLCOURSES' | translate }}</ion-select-option>
                 <ion-select-option value="active">{{ 'ACTIVECOURSES' | translate }}</ion-select-option>
                 <ion-select-option value="General">{{ 'GENERAL' | translate }}</ion-select-option>

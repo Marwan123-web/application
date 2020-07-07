@@ -54,7 +54,9 @@ export class changePasswordPage implements OnInit {
     this.currentUser = this.authenticationService.currentUserValue;
   }
 
-  changePassword(password: HTMLInputElement, confirm_password: HTMLInputElement) {
+  changePassword() {
+    let password = document.getElementById("passwordinput") as HTMLInputElement;
+    let confirm_password = document.getElementById("confirmpasswordinput") as HTMLInputElement;
     this.password = password.value;
     this.adminservices.changePassword(this.currentUser._id, this.password).subscribe(res => {
       this.alertservice.showAlert("&#xE876;", "success", res.msg);

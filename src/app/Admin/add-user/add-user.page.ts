@@ -21,6 +21,7 @@ export class addUserPage implements OnInit {
   dataOfJoin: any;
   selectedLanguage: string;
   validations_form: FormGroup;
+  customPopoverOptions: any;
   // id, name, email, password
   constructor(private adminservices: AdminservicesService, private alertservice: AlertService, private formBuilder: FormBuilder,
     private translateConfigService: TranslateConfigService, private _router: Router
@@ -32,7 +33,11 @@ export class addUserPage implements OnInit {
     //update the ui
     this.role = event.target.value;
   }
-  addUser(id: HTMLInputElement, name: HTMLInputElement, email: HTMLInputElement, password: HTMLInputElement) {
+  addUser() {
+    let id = document.getElementById("idinput") as HTMLInputElement;
+    let name = document.getElementById("nameinput") as HTMLInputElement;
+    let email = document.getElementById("emailinput") as HTMLInputElement;
+    let password = document.getElementById("passwordinput") as HTMLInputElement;
     if (this.type == undefined) {
       this.alertservice.showAlert("&#xE5CD;", "error", 'Please Select User Type');
     }

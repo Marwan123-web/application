@@ -22,7 +22,10 @@ export class ManageRouterPage implements OnInit {
     this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
   }
 
-  updateRouter(locationId: HTMLInputElement, locationName: HTMLInputElement, routerAddress: HTMLInputElement) {
+  updateRouter() {
+    let locationId = document.getElementById("locationIdinput") as HTMLInputElement;
+    let locationName = document.getElementById("locationNameinput") as HTMLInputElement;
+    let routerAddress = document.getElementById("routerAddressinput") as HTMLInputElement;
     this.locationId = locationId.value, this.locationName = locationName.value, this.routerAddress = routerAddress.value;
     this.adminservices.updateRouter(this.locationId, this.locationName, this.routerAddress).subscribe(res => {
       this.alertservice.showAlert("&#xE876;", "success", res.msg);
@@ -38,7 +41,8 @@ export class ManageRouterPage implements OnInit {
 
   }
 
-  deleteRouter(locationId: HTMLInputElement,) {
+  deleteRouter() {
+    let locationId = document.getElementById("locationIdinput") as HTMLInputElement;
     this.locationId = locationId.value;
     this.adminservices.deleteRouter(this.locationId).subscribe(res => {
       this.alertservice.showAlert("&#xE876;", "success", res.msg);

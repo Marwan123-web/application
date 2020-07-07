@@ -15,7 +15,7 @@
 </ion-header>
 <ion-content class="ion-padding" id="add-course">
     <form id="addCourse-form" [formGroup]="validations_form"
-        (ngSubmit)="addCourse(courseCode,courseName, creaditHours, prerequisite)">
+        (ngSubmit)="addCourse()">
         <ion-list id="addCourse-info">
             <ion-item id="addCourse-courseCode">
                 <ion-label>
@@ -23,7 +23,7 @@
                 </ion-label>
             </ion-item>
             <ion-item id="addCourse-courseCodeInput">
-                <ion-input type="text" formControlName="courseCode" maxlength="5" placeholder="Enter Course Code"
+                <ion-input type="text" formControlName="courseCode" id="coursecodeinput" maxlength="5" placeholder="Enter Course Code"
                     #courseCode required></ion-input>
             </ion-item>
             <div class="validation-errors">
@@ -40,7 +40,7 @@
                 </ion-label>
             </ion-item>
             <ion-item id="addCourse-nameInput">
-                <ion-input type="text" formControlName="name" #courseName placeholder="Enter Course Name" required>
+                <ion-input type="text" formControlName="name" id="coursenameinput" #courseName placeholder="Enter Course Name" required>
                 </ion-input>
             </ion-item>
             <div class="validation-errors">
@@ -57,8 +57,8 @@
                 </ion-label>
             </ion-item>
             <ion-item id="addCourse-departmentInput">
-                <ion-select [(ngModel)]="department" [ngModelOptions]="{standalone: true}" 
-                    slot="end" [interfaceOptions]="customPopoverOptions" interface="popover"
+                <ion-select [(ngModel)]="department" [ngModelOptions]="{standalone: true}" slot="end"
+                    [interfaceOptions]="customPopoverOptions" interface="popover"
                     placeholder="{{ 'SELECTDEPARTMENT' | translate }}" id='department'
                     (ionChange)="onSelectChange($event)" #courseDepartment aria-required="required">
                     <ion-select-option value="General">{{ 'GENERAL' | translate }}</ion-select-option>
@@ -76,7 +76,7 @@
             </ion-item>
             <ion-item id="addCourse-creditHoursInput">
                 <ion-input type="number" min="0" max="140" formControlName="creditHours"
-                    placeholder="Enter Course's Credit Horurs" #creaditHours required></ion-input>
+                    placeholder="Enter Course's Credit Horurs" id="credithoursinput" #creaditHours required></ion-input>
             </ion-item>
             <div class="validation-errors">
                 <ng-container *ngFor="let validation of validation_messages.creditHours">
@@ -92,9 +92,9 @@
                 </ion-label>
             </ion-item>
             <ion-item id="addCourse-prerequisiteInput">
-                <ion-select [(ngModel)]="prerequisite" [ngModelOptions]="{standalone: true}"
-                     slot="end" [interfaceOptions]="customPopoverOptions"
-                    interface="popover" placeholder="{{ 'SELECTPREREQUISITE' | translate }}" id='prerequisite'
+                <ion-select [(ngModel)]="prerequisite" [ngModelOptions]="{standalone: true}" slot="end"
+                    [interfaceOptions]="customPopoverOptions" interface="popover"
+                    placeholder="{{ 'SELECTPREREQUISITE' | translate }}" id='prerequisite'
                     (ionChange)="onSelectChange2($event)" #prerequisiteName aria-required="required">
                     <ion-select-option value="-">{{ '-' }}</ion-select-option>
                     <ion-select-option *ngFor="let course of coursedata" value="{{ course.courseName }}">

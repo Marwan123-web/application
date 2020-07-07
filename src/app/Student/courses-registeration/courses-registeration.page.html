@@ -20,7 +20,7 @@
                 <ion-label>
                     {{ 'COURSES' | translate }}
                 </ion-label>
-                <ion-select [(ngModel)]="courses" [ngModelOptions]="{standalone: true}" formControlName="courses" slot="end" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="{{ 'SELECTCOURSE' | translate }}" id='gradeType' (ionChange)="onSelectChange($event)"
+                <ion-select [(ngModel)]="courses" [ngModelOptions]="{standalone: true}"  slot="end" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="{{ 'SELECTCOURSE' | translate }}" id='gradeType' (ionChange)="onSelectChange($event)"
                     #course aria-required="required">
                     <ion-select-option *ngFor="let course of allCourses" value="{{course.courseCode}}">
                         {{course.courseName}}</ion-select-option>

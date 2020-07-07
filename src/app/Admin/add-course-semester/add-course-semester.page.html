@@ -14,7 +14,7 @@
     </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding" id="add-course-grade">
-    <form id="addCourseSemester-form" [formGroup]="validations_form" (ngSubmit)="addCourseSemester(year)">
+    <form id="addCourseSemester-form" [formGroup]="validations_form" (ngSubmit)="addCourseSemester()">
         <ion-list id="addCourseSemester-info">
             <ion-item id="addCourseSemester-semester">
                 <ion-label>
@@ -36,7 +36,7 @@
                     {{ 'YEAR' | translate }}
                 </ion-label>
                 <ion-datetime [pickerOptions]="customPickerOptions" formControlName="year"
-                    placeholder="{{ 'SELECTYEAR' | translate }}" displayFormat="YYYY" min="2020" max="2040" #year
+                    placeholder="{{ 'SELECTYEAR' | translate }}" displayFormat="YYYY" min="2020" max="2040" id="yearinput" #year
                     required></ion-datetime>
             </ion-item>
         </ion-list>

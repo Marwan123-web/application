@@ -55,7 +55,9 @@ export class changeEmailPage implements OnInit {
     this.currentUser = this.authenticationService.currentUserValue;
   }
 
-  changeEmail(email: HTMLInputElement, confirm_email: HTMLInputElement) {
+  changeEmail() {
+    let email = document.getElementById("emailinput") as HTMLInputElement;
+    let confirm_email = document.getElementById("confirmemailinput") as HTMLInputElement;
     this.email = email.value;
     this.adminservices.changeEmail(this.currentUser._id, this.email).subscribe(res => {
       this.alertservice.showAlert("&#xE876;", "success", res.msg);

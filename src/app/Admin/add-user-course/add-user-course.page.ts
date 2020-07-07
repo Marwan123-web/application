@@ -30,6 +30,7 @@ export class addUserCoursePage implements OnInit {
   selectedLanguage: string;
   validations_form: FormGroup;
   currentUser: User;
+  customPopoverOptions: any;
   constructor(private adminservices: AdminservicesService, private _Activatedroute: ActivatedRoute, private formBuilder: FormBuilder,
     private _router: Router,
     private userserviceService: UserserviceService,

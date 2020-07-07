@@ -32,9 +32,9 @@ export class studentCoursesPage implements OnInit {
   semesterdata: any;
   status: any;
   selectedLanguage: string;
-  public columns: any;
-  public rows: any;
   sub: any;
+  courseType: any;
+  customPopoverOptions: any;
   constructor(private teacherservices: TeacherServiceService, private _Activatedroute: ActivatedRoute,
     private _router: Router,
     private authenticationService: AuthService,

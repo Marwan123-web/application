@@ -23,7 +23,7 @@ import { WifiWizard2 } from '@ionic-native/wifi-wizard-2/ngx';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, ReactiveFormsModule,FormsModule , NgxDatatableModule,
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, ReactiveFormsModule, FormsModule, NgxDatatableModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -31,7 +31,7 @@ import { WifiWizard2 } from '@ionic-native/wifi-wizard-2/ngx';
         deps: [HttpClient]
       }
     }),
-    
+
   ],
   providers: [
     StatusBar,

@@ -20,6 +20,8 @@ export class manageUserPage implements OnInit {
   type: any;
   selectedLanguage: string;
   validations_form: FormGroup;
+  customPopoverOptions: any;
+
   constructor(private adminservices: AdminservicesService, private alertservice: AlertService, private formBuilder: FormBuilder,
     private translateConfigService: TranslateConfigService, private _router: Router) {
     this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
@@ -29,7 +31,11 @@ export class manageUserPage implements OnInit {
     //update the ui
     this.role = event.target.value;
   }
-  updateUser(id: HTMLInputElement, name: HTMLInputElement, email: HTMLInputElement, password: HTMLInputElement) {
+  updateUser() {
+    let id = document.getElementById("idinput") as HTMLInputElement;
+    let name = document.getElementById("nameinput") as HTMLInputElement;
+    let email = document.getElementById("emailinput") as HTMLInputElement;
+    let password = document.getElementById("passwordinput") as HTMLInputElement;
     this._id = id.value, this.name = name.value, this.email = email.value, this.password = password.value;
     this.adminservices.updateUser(this._id, this.name, this.email, this.password, this.role).subscribe(res => {
       this.alertservice.showAlert("&#xE876;", "success", res.msg);
@@ -48,10 +54,9 @@ export class manageUserPage implements OnInit {
 
   }
 
-  deleteUser(id: HTMLInputElement) {
+  deleteUser() {
+    let id = document.getElementById("idinput") as HTMLInputElement;
     this._id = id.value;
-    let response = document.getElementById('response');
-    let error = document.getElementById('error');
     this.adminservices.deleteUser(this._id).subscribe(res => {
       this.alertservice.showAlert("&#xE876;", "success", res.msg);
       id.value = '';

@@ -25,6 +25,8 @@ export class coursesRegisterationPage implements OnInit {
   allCourses: any;
   selectedLanguage: string;
   validations_form: FormGroup;
+  courses: any;
+  customPopoverOptions: any;
   constructor(
     private router: Router,
     private authenticationService: AuthService,
@@ -44,21 +46,30 @@ export class coursesRegisterationPage implements OnInit {
     this.course = event.target.value;
   }
   addUserCourse() {
-
-    this.teacherservices.addUserCourse(this.currentUser._id, this.course, this.currentUser._id).subscribe(res => {
-      this.alertservice.showAlert("&#xE876;", "success", res.msg);
-    }, err => {
-      this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
+    if (this.course == undefined) {
+      this.alertservice.showAlert("&#xE5CD;", "error", 'Please Select Course');
     }
-    );
+    else {
+      this.teacherservices.addUserCourse(this.currentUser._id, this.course, this.currentUser._id).subscribe(res => {
+        this.alertservice.showAlert("&#xE876;", "success", res.msg);
+      }, err => {
+        this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
+      }
+      );
+    }
   }
   deleteUserCourse() {
-    this.teacherservices.deleteUserCourse(this.currentUser._id, this.course).subscribe(res => {
-      this.alertservice.showAlert("&#xE876;", "success", res.msg);
-    }, err => {
-      this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
+    if (this.course == undefined) {
+      this.alertservice.showAlert("&#xE5CD;", "error", 'Please Select Course');
     }
-    );
+    else {
+      this.teacherservices.deleteUserCourse(this.currentUser._id, this.course).subscribe(res => {
+        this.alertservice.showAlert("&#xE876;", "success", res.msg);
+      }, err => {
+        this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
+      }
+      );
+    }
   }
 
 
@@ -75,7 +86,7 @@ export class coursesRegisterationPage implements OnInit {
     );
 
     this.validations_form = this.formBuilder.group({
-      courses: new FormControl('', Validators.required),
+      // courses: new FormControl('', Validators.required),
     });
 
 

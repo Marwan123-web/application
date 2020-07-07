@@ -31,6 +31,8 @@ export class deleteTaskPage implements OnInit {
   courseCode: string;
   semester_time: string;
   myform: any;
+  customPopoverOptions: any;
+  task: any;
   constructor(
     private router: Router,
     private authenticationService: AuthService,

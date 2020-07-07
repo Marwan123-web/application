@@ -23,7 +23,7 @@
             </ion-item>
             <ion-item id="manageStudentGrade-studentIDInput">
                 <ion-input type="number" min="20201800" max="20301800" formControlName="id" value=""
-                    placeholder="Enter Student ID" #studentId required></ion-input>
+                    placeholder="Enter Student ID" #studentId id="studentidinput" required></ion-input>
             </ion-item>
             <div class="validation-errors">
                 <ng-container *ngFor="let validation of validation_messages.id">
@@ -57,7 +57,7 @@
             </ion-item>
             <ion-item id="manageStudentGrade-socreInput">
                 <ion-input type="number" placeholder="Enter Student Grade" min="0" max="100" formControlName="grade"
-                    value="" #score required></ion-input>
+                    value="" #score id="studentscoreinput" required></ion-input>
             </ion-item>
             <div class="validation-errors">
                 <ng-container *ngFor="let validation of validation_messages.grade">
@@ -69,8 +69,8 @@
             </div>
         </ion-list>
         <ion-button id="manageStudentGrade-updateStudentGradeBtn" type="submit" expand="block"
-            [disabled]="!validations_form.valid" (click)="updateStudentGradefun(studentId,score)"
-            class="ionBtn ionBtn-success" value="updateStudentGrade">
+            [disabled]="!validations_form.valid" (click)="updateStudentGradefun()" class="ionBtn ionBtn-success"
+            value="updateStudentGrade">
             <ion-icon name="sync-outline" slot="start"></ion-icon>
             {{ 'UPDATESTUDENTGRADE' | translate }}
         </ion-button>

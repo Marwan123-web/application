@@ -15,7 +15,7 @@
 </ion-header>
 <!-- [formGroup]="validations_form" -->
 <ion-content class="ion-padding" id="add-router">
-  <form id="addrouter-form" (ngSubmit)="manageRouter(locationId,locationName, routerAddress)">
+  <form id="addrouter-form">
     <ion-list id="addrouter-info">
       <ion-item id="addrouter-locationId">
         <ion-label>
@@ -24,7 +24,8 @@
       </ion-item>
       <!-- formControlName="locationId" -->
       <ion-item id="addrouter-locationIdInput">
-        <ion-input type="text" maxlength="5" placeholder="Enter Location Code" #locationId required></ion-input>
+        <ion-input type="text" maxlength="5" placeholder="Enter Location Code" id="locationIdinput" #locationId
+          required></ion-input>
       </ion-item>
       <!-- <div class="validation-errors">
         <ng-container *ngFor="let validation of validation_messages.locationId">
@@ -41,7 +42,7 @@
       </ion-item>
       <!-- formControlName="name" -->
       <ion-item id="addRouter-nameInput">
-        <ion-input type="text" #locationName placeholder="Enter Location Name" required>
+        <ion-input type="text" #locationName id="locationNameinput" placeholder="Enter Location Name" required>
         </ion-input>
       </ion-item>
       <!-- <div class="validation-errors">
@@ -59,7 +60,8 @@
       </ion-item>
       <!-- formControlName="routerAddress"  -->
       <ion-item id="addRouter-routerAddressInput">
-        <ion-input type="text" min="0" max="140" placeholder="Enter Router's Address" #routerAddress required>
+        <ion-input type="text" min="0" max="140" placeholder="Enter Router's Address" id="routerAddressinput"
+          #routerAddress required>
         </ion-input>
       </ion-item>
       <!-- <div class="validation-errors">
@@ -75,16 +77,15 @@
     <ion-row>
       <ion-col size="6">
         <!-- [disabled]="!validations_form.valid" -->
-        <ion-button id="manageRouter-updateRouterBtn" type="submit" expand="block"
-          (click)="updateRouter(locationId,locationName, routerAddress)" class="ionBtn ionBtn-success"
-          value="updateRouter">
+        <ion-button id="manageRouter-updateRouterBtn" type="submit" expand="block" (click)="updateRouter()"
+          class="ionBtn ionBtn-success" value="updateRouter">
           <ion-icon name="sync-outline" slot="start"></ion-icon>
           {{ 'UPDATEROUTER' | translate }}
         </ion-button>
       </ion-col>
       <ion-col size="6">
         <!-- [disabled]="!validations_form.get('locationId').valid" -->
-        <ion-button id="manageRouter-deleteRouterBtn" type="submit" expand="block" (click)="deleteRouter(locationId)"
+        <ion-button id="manageRouter-deleteRouterBtn" type="submit" expand="block" (click)="deleteRouter()"
           class="ionBtn ionBtn-danger" value="deleteRouter">
           <ion-icon name="trash" slot="start"></ion-icon>
           {{ 'DELETEROUTER' | translate }}

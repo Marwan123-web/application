@@ -58,7 +58,9 @@ export class addTaskPage implements OnInit {
   get isTeacherOrStudent() {
     return this.currentUser && (this.currentUser.role === Role.Teacher || this.currentUser.role === Role.Student);
   }
-  AddTask(taskType: HTMLInputElement, taskPath: HTMLInputElement) {
+  AddTask() {
+    let taskType = document.getElementById("taskTypeinput") as HTMLInputElement;
+    let taskPath = document.getElementById("taskPathinput") as HTMLInputElement;
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       this.courseCode = params.get('courseCode');
       this.semester_time = params.get('semester_time');

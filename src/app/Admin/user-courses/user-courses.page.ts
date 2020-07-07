@@ -42,6 +42,8 @@ export class userCoursesPage implements OnInit {
   objectC: any;
   courseCode: any;
   semester_time: any;
+  customPopoverOptions: any;
+  courseType: any;
   constructor(private adminservices: AdminservicesService, private _Activatedroute: ActivatedRoute,
     private _router: Router,
     private userserviceService: UserserviceService,

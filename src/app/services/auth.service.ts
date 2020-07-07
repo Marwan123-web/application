@@ -14,7 +14,7 @@ export class AuthService {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
-
+  url: any = "http://10.0.2.2:3000";
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
   }
@@ -22,7 +22,7 @@ export class AuthService {
   login(_id: string, password: string) {
     this.body = { _id, password };
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.http.post<any>(`http://localhost:3000/login`, this.body, { headers: headers })
+    return this.http.post<any>(`${this.url}/login`, this.body, { headers: headers })
       .pipe(map(user => {
         // login successful if there's a jwt token in the response
         if (user && user.accessToken) {

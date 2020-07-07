@@ -22,6 +22,8 @@ export class manageCoursePage implements OnInit {
   validations_form: FormGroup;
   coursedata: any;
   prerequisiteName: any;
+  customPopoverOptions: any;
+  customPickerOptions: any;
   constructor(private adminservices: AdminservicesService, private alertservice: AlertService, private formBuilder: FormBuilder,
     private translateConfigService: TranslateConfigService, private _router: Router) {
     this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
@@ -35,7 +37,10 @@ export class manageCoursePage implements OnInit {
     //update the ui
     this.prerequisiteName = event.target.value;
   }
-  updateCourse(courseCode: HTMLInputElement, courseName: HTMLInputElement, creaditHours: HTMLInputElement) {
+  updateCourse() {
+    let courseCode = document.getElementById("coursecodeinput") as HTMLInputElement;
+    let courseName = document.getElementById("coursenameinput") as HTMLInputElement;
+    let creaditHours = document.getElementById("credithoursinput") as HTMLInputElement;
     if (this.courseDepartment == undefined) {
       this.alertservice.showAlert("&#xE5CD;", "error", 'Please Select Course Department');
     }
@@ -59,7 +64,8 @@ export class manageCoursePage implements OnInit {
     }
   }
 
-  deleteCourse(courseCode: HTMLInputElement) {
+  deleteCourse() {
+    let courseCode = document.getElementById("coursecodeinput") as HTMLInputElement;
     this.courseCode = courseCode.value;
     this.adminservices.deleteCourse(this.courseCode).subscribe(res => {
       this.alertservice.showAlert("&#xE876;", "success", res.msg);

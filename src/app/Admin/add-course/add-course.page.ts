@@ -21,6 +21,8 @@ export class addCoursePage implements OnInit {
   selectedLanguage: string;
   validations_form: FormGroup;
   coursedata: any;
+  customPopoverOptions: any;
+  prerequisite: any;
   constructor(private adminservices: AdminservicesService, private alertservice: AlertService, private formBuilder: FormBuilder,
     private translateConfigService: TranslateConfigService, private _router: Router) {
     this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
@@ -34,7 +36,11 @@ export class addCoursePage implements OnInit {
     //update the ui
     this.prerequisiteName = event.target.value;
   }
-  addCourse(courseCode: HTMLInputElement, courseName: HTMLInputElement, creaditHours: HTMLInputElement) {
+  addCourse() {
+    let courseCode = document.getElementById("coursecodeinput") as HTMLInputElement;
+    let courseName = document.getElementById("coursenameinput") as HTMLInputElement;
+    let creaditHours = document.getElementById("credithoursinput") as HTMLInputElement;
+
     if (this.courseDepartment == undefined) {
       this.alertservice.showAlert("&#xE5CD;", "error", 'Please Select Course Department');
     }

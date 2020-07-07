@@ -29,6 +29,7 @@ export class deleteCourseGradePage implements OnInit {
   selectedLanguage: string;
   validations_form: FormGroup;
   courseCode: string;
+  customPopoverOptions: any;
   constructor(private adminservices: AdminservicesService, private _Activatedroute: ActivatedRoute, private formBuilder: FormBuilder,
     private _router: Router,
     private userserviceService: UserserviceService,

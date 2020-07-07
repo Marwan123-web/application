@@ -21,7 +21,11 @@ export class AddRouterPage implements OnInit {
     this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
   }
 
-  addRouter(locationId: HTMLInputElement, locationName: HTMLInputElement, routerAddress: HTMLInputElement) {
+  addRouter() {
+    let locationId = document.getElementById("locationIdinput") as HTMLInputElement;
+    let locationName = document.getElementById("locationNameinput") as HTMLInputElement;
+    let routerAddress = document.getElementById("routerAddressinput") as HTMLInputElement;
+
     this.locationId = locationId.value, this.locationName = locationName.value, this.routerAddress = routerAddress.value;
     this.adminservices.addRouter(this.locationId, this.locationName, this.routerAddress).subscribe(res => {
       this.alertservice.showAlert("&#xE876;", "success", res.msg);

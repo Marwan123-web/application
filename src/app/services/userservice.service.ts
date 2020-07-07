@@ -18,11 +18,12 @@ export class UserserviceService {
   public get currentClickedUserValue(): User {
     return this.currentClickedUserSubject.value;
   }
+  url: any = "http://192.168.1.7:3000";
 
   getClickedUser(UserId: string) {
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
     this._id = UserId;
-    return this.http.get<User>(`http://localhost:3000/user/${this._id}/profile`, { headers: headers })
+    return this.http.get<User>(`${this.url}/user/${this._id}/profile`, { headers: headers })
       .pipe(map(user => {
         // login successful if there's a jwt token in the response
         if (user) {
