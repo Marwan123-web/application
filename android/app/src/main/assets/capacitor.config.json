@@ -1,6 +1,6 @@
 {
   "appId": "com.college.test",
-  "appName": "smart-college",
+  "appName": "Smart-College",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

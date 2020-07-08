@@ -82,17 +82,12 @@ export class usersPage implements OnInit {
   }
   ngOnInit(): void {
     $(document).ready(function () {
-      dt.$('#table_id').DataTable();
+      dt.$('#table_id').DataTable({
+        "scrollX": true
+      });
     });
     this.getUsers();
 
 
   }
-  // closClickedUser() {
-  //   this.userserviceService.closeClickedUser();
-  // }
-  openClickedUser(id) {
-    this._router.navigate(['/user/profile/' + id])
-  }
-
 }

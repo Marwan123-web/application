@@ -27,10 +27,10 @@
             </thead>
             <tbody>
                 <tr *ngFor="let userdata of usertotalgradestotal;index as i;">
-                    <th scope="row">{{userdata.user._id}}</th>
-                    <td>{{userdata.user.name}}</td>
-                    <td *ngFor="let fdata of things[i]">{{fdata}}</td>
-                    <th scope="row">{{userdata.totalGrades.totalGrades}}</th>
+                    <th scope="col">{{userdata.user._id}}</th>
+                    <th scope="col">{{userdata.user.name}}</th>
+                    <th scope="col" *ngFor="let fdata of things[i]">{{fdata}}</th>
+                    <th scope="col">{{userdata.totalGrades.totalGrades}}</th>
 
                 </tr>
             </tbody>

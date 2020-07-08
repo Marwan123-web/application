@@ -42,11 +42,12 @@
                     <th scope="col">{{ 'STATUS' | translate }}</th>
                 </tr>
             </thead>
-            <tbody *ngFor="let course of coursedata">
-                <tr>
-                    <th scope="row"> <a (click)="openCourse(course.courseCode)">{{course.courseCode}}</a></th>
-                    <td>{{course.courseName}}</td>
-                    <td>{{course.status}}</td>
+            <tbody>
+                <tr *ngFor="let course of coursedata">
+                    <th scope="row"> <a
+                            [routerLink]="['/course/semesters', course.courseCode]">{{course.courseCode}}</a></th>
+                    <td scope="row">{{course.courseName}}</td>
+                    <td scope="row">{{course.status}}</td>
                 </tr>
             </tbody>
         </table>

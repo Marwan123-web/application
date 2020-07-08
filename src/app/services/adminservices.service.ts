@@ -145,7 +145,7 @@ export class AdminservicesService {
   public addCourse(courseCode, courseName, courseDepartment, creaditHours, prerequisite): Observable<any> {
     this.addCourseBody = { courseCode, courseName, courseDepartment, creaditHours, prerequisite }
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
-    return this.httpClient.post('${this.url}/add/course', this.addCourseBody, { headers: headers });
+    return this.httpClient.post(`${this.url}/add/course`, this.addCourseBody, { headers: headers });
   }
   public addCourseSemester(courseCode, semester_time): Observable<any> {
     this.addCourseSemesterBody = { semester_time }

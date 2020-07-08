@@ -44,6 +44,7 @@ export class userCoursesPage implements OnInit {
   semester_time: any;
   customPopoverOptions: any;
   courseType: any;
+  userid: any;
   constructor(private adminservices: AdminservicesService, private _Activatedroute: ActivatedRoute,
     private _router: Router,
     private userserviceService: UserserviceService,
@@ -80,10 +81,13 @@ export class userCoursesPage implements OnInit {
 
   ngOnInit(): void {
     $(document).ready(function () {
-      dt.$('#table_id').DataTable();
+      dt.$('#table_id').DataTable({
+        "scrollX": true
+      });
     });
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       this._id = params.get('id');
+      this.userid = this._id
       this.adminservices.myCourses(this._id).subscribe(res => {
         this.usercoursesdata = res;
       }, err => {
@@ -96,20 +100,20 @@ export class userCoursesPage implements OnInit {
   // closCourse() {
   //   this.courseService.closeCourse();
   // }
-  openCourse(courseCode, semester_time) {
-    this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this._id = params.get('id');
-      this._router.navigate(['/user/course/info/' + this._id, courseCode, semester_time])
-    });
-  }
+  // openCourse(courseCode, semester_time) {
+  //   this.sub = this._Activatedroute.paramMap.subscribe(params => {
+  //     this._id = params.get('id');
+  //     this._router.navigate(['/user/course/info/' + this._id, courseCode, semester_time])
+  //   });
+  // }
 
   // closSemester() {
   //   this.semesterserviceService.closeSemester();
   // }
-  openClickedUser() {
-    this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this._id = params.get('id');
-      this._router.navigate(['/user/add-delete-course/' + this._id])
-    });
-  }
+  // openClickedUser() {
+  //   this.sub = this._Activatedroute.paramMap.subscribe(params => {
+  //     this._id = params.get('id');
+  //     this._router.navigate(['/user/add-delete-course/' + this._id])
+  //   });
+  // }
 }

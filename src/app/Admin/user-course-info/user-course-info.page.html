@@ -14,26 +14,37 @@
     </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding" id="user-course-info-sheet">
-    <table id="table_id" class="table table-hover table-light display">
-        <thead>
-            <tr *ngIf="GradeTypeGrade">
-                <th scope="col">ID</th>
-                <th scope="col">Name</th>
-                <th scope="col" *ngFor="let grade of GradeTypeGrade">{{grade.type}}
-                    <span>({{grade.grade}})</span> </th>
-                <th scope="col" *ngIf="courseTotalGrades">Total({{courseTotalGrades.totalGrades}})
-                </th>
+    <ion-list id="user-profile-info" *ngIf="usertotalgrades">
+        <ion-item id="user-course-info-id">
+            <ion-label>
+                <p>{{ 'ID' | translate}}</p>
+                <h2>{{usertotalgrades.user._id}}</h2>
+            </ion-label>
+        </ion-item>
+        <ion-item id="user-profile-info-name">
+            <ion-label>
+                <p>{{ 'NAME' | translate}}</p>
+                <h2>{{usertotalgrades.user.name}}</h2>
+            </ion-label>
+        </ion-item>
+        <table id="table_id" class="table table-hover table-light display">
+            <thead>
+                <tr *ngIf="GradeTypeGrade">
+                    <th scope="col" *ngFor="let grade of GradeTypeGrade">{{grade.type}}
+                        <span>({{grade.grade}})</span> </th>
+                    <th scope="col" *ngIf="courseTotalGrades">Total({{courseTotalGrades.totalGrades}})
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="usertotalgrades">
+                    <th *ngFor="let grade of arrofdata">{{grade.score}}</th>
+                    <th scope="row">{{usertotalgrades.totalGrades.totalGrades}}</th>
+                </tr>
+            </tbody>
+        </table>
+    </ion-list>
 
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngIf="usertotalgrades">
-                <th scope="row">{{usertotalgrades.user._id}}</th>
-                <th scope="row">{{usertotalgrades.user.name}}</th>
-                <td *ngFor="let grade of arrofdata">{{grade.score}}</td>
-                <th scope="row">{{usertotalgrades.totalGrades.totalGrades}}</th>
 
-            </tr>
-        </tbody>
-    </table>
+
 </ion-content>

@@ -108,7 +108,9 @@ export class studentsGradePage implements OnInit {
 
   ngOnInit(): void {
     $(document).ready(function () {
-      dt.$('#table_id').DataTable();
+      dt.$('#table_id').DataTable({       
+        "scrollX": true
+      });
     });
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       this.courseCode = params.get('courseCode');

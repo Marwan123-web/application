@@ -885,7 +885,7 @@ exports.changeCourseAttendanceStatus = async (req, res, next) => { //[]
             });
         } else {
             adminService.updateCourseAttendanceStatus(code, attendance_status).then((change) => {
-                if (change) { 
+                if (change) {
                     res.status(201).json({ msg: "Course Attendance" + " " + attendance_status + " " + "Successfuly" });
                 } else {
                     res.status(404).json({ msg: "Can't Change Course Attendance Status" });

@@ -14,6 +14,7 @@ export class SettingsPage implements OnInit {
   public darkMode: boolean;
   selectedLanguage: any;
   DefaultLangValue: string;
+  returnUrl: string;
   constructor(private app: AppComponent, private translateConfigService: TranslateConfigService, private authenticationService: AuthService,
     public router: Router, private alertservice: AlertService) {
     this.darkMode = JSON.parse(localStorage.getItem('isThemeMode'));
@@ -45,9 +46,12 @@ export class SettingsPage implements OnInit {
   }
 
   logout() {
+    this.returnUrl = '/login'
     this.authenticationService.logout();
-    this.router.navigate(['/login']);
-    this.alertservice.showAlert("&#xE876;", "success", "You have successfully logged out!");
+    // this.router.navigate(['/login']);
+    this.router.navigate([this.returnUrl]);
+
+    // this.alertservice.showAlert("&#xE876;", "success", "You have successfully logged out!");
   }
 
   ngOnInit() {

@@ -8,8 +8,8 @@ import { CourseService } from 'src/app/services/course.service';
 import { SemesterserviceService } from 'src/app/services/semesterservice.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { TranslateConfigService } from 'src/app/services/translate-config.service';
-import { scanBluetoothPage } from 'src/app/scan-bluetooth/scan-bluetooth.page'
-
+// import { scanBluetoothPage } from 'src/app/scan-bluetooth/scan-bluetooth.page'
+import { WifiWizard2 } from '@ionic-native/wifi-wizard-2/ngx';
 @Component({
   selector: 'app-attend-me',
   templateUrl: 'attend-me.page.html',
@@ -30,6 +30,9 @@ export class attendMePage implements OnInit {
   sub: any;
   courseCode: string;
   semester_time: string;
+  coursesemesterlectures: any;
+  lectureno: number;
+  wifissid: any;
 
   constructor(
     private router: Router,
@@ -39,6 +42,7 @@ export class attendMePage implements OnInit {
     private courseService: CourseService,
     private semesterserviceService: SemesterserviceService, private alertservice: AlertService,
     private translateConfigService: TranslateConfigService,
+    private wifiWizard2: WifiWizard2
 
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
@@ -57,15 +61,14 @@ export class attendMePage implements OnInit {
   get isTeacherOrStudent() {
     return this.currentUser && (this.currentUser.role === Role.Teacher || this.currentUser.role === Role.Student);
   }
-  attendMe(lectureNumber: HTMLInputElement, beaconId: HTMLInputElement) {
+  AttendMe() {
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       this.courseCode = params.get('courseCode');
       this.semester_time = params.get('semester_time');
-      this.lectureNumber = lectureNumber.value, this.beaconId = beaconId.value;
-      this.teacherservices.semesterAttendMe(this.currentUser._id, this.courseCode, this.semester_time, this.lectureNumber, this.beaconId).subscribe(res => {
+      this.beaconId = '192.168.1.1'
+      this.teacherservices.semesterAttendMe(this.currentUser._id, this.courseCode, this.semester_time, this.lectureno, this.wifissid).subscribe(res => {
         this.alertservice.showAlert("&#xE876;", "success", "You have successfully Attended!");
-        lectureNumber.value = "";
-        beaconId.value = "";
+        // beaconId.value = "";
       }, err => {
         this.alertservice.showAlert("&#xE5CD;", "error", "ID or password is incorrect. please try again!");
       }
@@ -78,9 +81,28 @@ export class attendMePage implements OnInit {
     this.translateConfigService.setLanguage(this.selectedLanguage);
   }
 
+  getcoursedata() {
+    this.sub = this._Activatedroute.paramMap.subscribe(params => {
+      this.courseCode = params.get('courseCode');
+      this.semester_time = params.get('semester_time');
 
+      this.teacherservices.getCourseSemesterData(this.courseCode, this.semester_time).subscribe(res => {
+        this.coursesemesterlectures = res.findsemesterdata.semesters[0].lectures
+        if (this.coursesemesterlectures.length == 0) {
+          this.lectureno = 1;
+        }
+        else {
+          this.lectureno = this.coursesemesterlectures[this.coursesemesterlectures.length - 1].lectureNumber;
+        }
+      }, err => {
+        this.coursesemesterlectures = err
+      }
+      );
+    });
+  }
   ngOnInit(): void {
-
+    this.getcoursedata();
+    this.wifissid = this.wifiWizard2.getConnectedSSID();
   }
 
 }

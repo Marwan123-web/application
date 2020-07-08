@@ -12,7 +12,7 @@ import { ViewEncapsulation } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NavController } from '@ionic/angular';
 import * as $ from 'jquery';
-import * as dt from 'node_modules/datatables.net';
+import * as dt from 'node_modules/datatables.net-dt';
 
 // declare var $: any;
 @Component({
@@ -86,50 +86,15 @@ export class adminCoursesPage implements OnInit {
     });
   }
   ngOnInit(): void {
-    $(document).ready(function () {
-      dt.$('#table_id').DataTable();
-    });
 
     this.getCourses();
-
-  }
-  // closClickedUser() {
-  //   this.userserviceService.closeClickedUser();
-  // }
-  // openClickedUser(id) {
-  //   this.userserviceService.getClickedUser(id).pipe(first()).subscribe(res => {
-  //   }, err => {
-  //     console.log('Fail to get Course');
-  //   }
-  //   );
-  // }
-
-  // closCourse() {
-  //   this.courseService.closeCourse();
-  //   console.log('ok');
-  // }
-  openCourse(courseCode) {
-    // this.courseService.getCourse(courseCode).pipe(first()).subscribe(res => {
-    //   if (res) {
-    this._router.navigate(['/course/semesters/' + courseCode])
-    // }
-
-    // }, err => {
-    //   console.log('Fail to get Course');
-    // }
-    // );
-
+    $(document).ready(function () {
+      dt.$('#table_id').DataTable({
+        "scrollX": true
+      });
+    });
   }
 
 
-  // closSemester() {
-  //   this.semesterserviceService.closeSemester();
-  // }
-  // openSemester(courseCode, semester_time) {
-  //   this.semesterserviceService.getCourseSemesterData(courseCode, semester_time).pipe(first()).subscribe(res => {
-  //   }, err => {
-  //     console.log('Fail to get Course Semester');
-  //   }
-  //   );
-  // }
+
 }

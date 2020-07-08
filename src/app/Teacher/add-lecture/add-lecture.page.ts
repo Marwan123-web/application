@@ -32,7 +32,10 @@ export class addLecturePage implements OnInit {
   locationaddress: any;
   locationName: any;
   hallslocation: any;
-
+  coursesemesterlectures: any;
+  lectureno: any;
+  lectures: any;
+  customPopoverOptions: any;
   constructor(
     private router: Router,
     private authenticationService: AuthService,
@@ -64,25 +67,30 @@ export class addLecturePage implements OnInit {
     this.locationaddress = event.target.value;
     console.log(this.locationaddress)
   }
-  AddLeacture(lectureNumber: HTMLInputElement) {
-    this.sub = this._Activatedroute.paramMap.subscribe(params => {
-      this.courseCode = params.get('courseCode');
-      this.semester_time = params.get('semester_time');
-      this.lectureNumber = lectureNumber.value;
-      this.teacherservices.addCourseSemesterLecture(this.courseCode, this.semester_time, this.lectureNumber, this.locationaddress).subscribe(res => {
-        this.teacherservices.addCourseSemesterAttendance(this.courseCode, this.semester_time, this.lectureNumber, this.locationaddress).subscribe(res => {
-          this.alertservice.showAlert("&#xE876;", "success", res.msg);
-          this.hallslocation = null;
-          lectureNumber.value = "";
+  AddLeacture() {
+    if (this.locationaddress == undefined) {
+      this.alertservice.showAlert("&#xE5CD;", "error", 'Please Select Lecture Location');
+    }
+    else {
+      this.sub = this._Activatedroute.paramMap.subscribe(params => {
+        this.courseCode = params.get('courseCode');
+        this.semester_time = params.get('semester_time');
+        // this.lectureNumber = lectureNumber.value;
+        this.teacherservices.addCourseSemesterLecture(this.courseCode, this.semester_time, this.lectureno, this.locationaddress).subscribe(res => {
+          if (res) {
+            this.teacherservices.addCourseSemesterAttendance(this.courseCode, this.semester_time, this.lectureno, this.locationaddress).subscribe(res => {
+              this.alertservice.showAlert("&#xE876;", "success", res.msg);
+              this.hallslocation = null;
+              // lectureNumber.value = "";
+            }, err => {
+              this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
+            })
+          }
         }, err => {
           this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
-        })
-
-      }, err => {
-        this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
+        });
       });
-    });
-
+    }
   }
 
   navigateTo() {
@@ -99,35 +107,33 @@ export class addLecturePage implements OnInit {
       this.routersdata = err;
     });
   }
+  getcoursedata() {
+    this.sub = this._Activatedroute.paramMap.subscribe(params => {
+      this.courseCode = params.get('courseCode');
+      this.semester_time = params.get('semester_time');
+
+      this.teacherservices.getCourseSemesterData(this.courseCode, this.semester_time).subscribe(res => {
+        this.coursesemesterlectures = res.findsemesterdata.semesters[0].lectures
+        this.lectures = this.coursesemesterlectures.length;
+        if (this.coursesemesterlectures.length == 0) {
+          this.lectureno = 1;
+        }
+        else {
+          this.lectureno = this.coursesemesterlectures[this.lectures - 1].lectureNumber + 1;
+        }
+      }, err => {
+        this.coursesemesterlectures = err
+      }
+      );
+    });
+  }
   ngOnInit(): void {
     // console.log(this.wifiWizard2.getConnectedSSID())
     this.getRouters();
-    this.validations_form = this.formBuilder.group({
-      lectureNumber: new FormControl('', Validators.compose([
-        Validators.max(12),
-        Validators.min(1),
-        Validators.required,
-      ])),
-      // location: new FormControl('', Validators.required),
-      // beaconid: new FormControl('', Validators.required),
-    });
+    this.getcoursedata();
+
 
   }
-
-  validation_messages = {
-    'lectureNumber': [
-      { type: 'min', message: 'Lecture Number must be at least 1.' },
-      { type: 'max', message: 'Lecture Number cannot be more than 12.' },
-      { type: 'required', message: 'Lecture Number is required.' },
-    ],
-    // 'location': [
-    //   { type: 'required', message: 'Location is required.' }
-    // ],
-    // 'beaconid': [
-    //   { type: 'required', message: 'Beacon ID is required.' }
-    // ]
-
-  };
 
 
 }

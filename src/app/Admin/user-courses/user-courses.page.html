@@ -33,19 +33,21 @@
         <table id="table_id" class="table table-hover table-light display">
             <thead>
                 <tr>
-                    <th scope="col">{{ 'COURSECODE' | translate }}</th>
+                    <!-- <th scope="col">{{ 'COURSECODE' | translate }}</th> -->
                     <th scope="col">{{ 'COURSENAME' | translate }}</th>
                     <th scope="col">{{ 'SEMESTERTIME' | translate }}</th>
-                    <th scope="col">{{ 'REGISTERATIONSTATUS' | translate }} </th>
+                    <th scope="col">{{ 'STATUS' | translate }} </th>
                 </tr>
             </thead>
             <tbody *ngFor='let course of usercoursesdata'>
-                <tr>
-                    <th scope="row"> <a
-                            (click)="openCourse(course.data.Id,course.data.semester_time)">{{course.data.Id}}</a></th>
-                    <td scope="row">{{course.x.courseName}}</td>
-                    <td scope="row">{{course.data.semester_time}}</td>
-                    <td scope="row">{{course.data.status}}</td>
+                <tr *ngIf="userid">
+                    <!-- <th scope="row"> <a
+                            (click)="openCourse(course.data.Id,course.data.semester_time)">{{course.data.Id}}</a></th> -->
+                    <td scope="col"
+                        [routerLink]="['/user/course/info', userid,course.data.Id,course.data.semester_time]">
+                        {{course.x.courseName}}</td>
+                    <td scope="col">{{course.data.semester_time}}</td>
+                    <td scope="col">{{course.data.status}}</td>
                 </tr>
             </tbody>
         </table>
@@ -57,8 +59,8 @@
         {{ 'OPEN' | translate }}
     </ion-button> -->
 
-    <ion-button id="Usercourses-addCourseBtn" type="submit" expand="block" (click)="openClickedUser()"
-        class="ionBtn ionBtn-danger" value="AddDeleteCourse">
+    <ion-button *ngIf="userid" id="Usercourses-addCourseBtn" type="submit" expand="block"
+        [routerLink]="['/user/add-delete-course', userid]" class="ionBtn ionBtn-danger" value="AddDeleteCourse">
         <ion-icon name="add" slot="start"></ion-icon>
         {{ 'ADDDROPCOURSE' | translate }}
     </ion-button>

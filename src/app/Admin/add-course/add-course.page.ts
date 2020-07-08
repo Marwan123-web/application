@@ -51,11 +51,11 @@ export class addCoursePage implements OnInit {
       this.courseCode = courseCode.value, this.courseName = courseName.value, this.creditHours = creaditHours.value;
       this.adminservices.addCourse(this.courseCode, this.courseName, this.courseDepartment, this.creditHours, this.prerequisiteName).subscribe(res => {
         this.alertservice.showAlert("&#xE876;", "success", res.msg);
-        courseCode.value = "";
-        courseName.value = "";
-        creaditHours.value = "";
-        this.prerequisiteName = null;
-        this.department = null;
+        // courseCode.value = "";
+        // courseName.value = "";
+        // creaditHours.value = "";
+        // this.prerequisiteName = null;
+        // this.department = null;
         this.validations_form.reset();
         this.navigateToCourses();
       }, err => {
@@ -102,7 +102,7 @@ export class addCoursePage implements OnInit {
     ];
     this.validations_form = this.formBuilder.group({
       courseCode: new FormControl('', Validators.compose([
-        addCoursePage.validCourseCode,
+        // addCoursePage.validCourseCode,
         Validators.maxLength(5),
         Validators.minLength(5),
         Validators.pattern('^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$'),

@@ -73,7 +73,7 @@ class teacherService {
         }
     }
     static async viewGrades(studentId, courseId, semester_time, gradeType) {
-        let fakedata = { "_id": "5eba5bb7900576e5c44f34b2", "studentId": studentId, "courseId": courseId, "semester_time": semester_time, "gradeType": gradeType, "score": "no grade", "__v": 0 }
+        let fakedata = { "_id": "5eba5bb7900576e5c44f34b2", "studentId": studentId, "courseId": courseId, "semester_time": semester_time, "gradeType": gradeType, "score": "N/G", "__v": 0 }
         let checkforgarde = await Grade.findOne({ studentId, courseId, semester_time, gradeType });
         if (checkforgarde) {
             return checkforgarde;
@@ -86,7 +86,7 @@ class teacherService {
     // ------------------------------------------------------Student---Service--------------------------------
 
     static async MyGrades(studentId, courseId, semester_time, gradeType) {
-        let fakedata = { "_id": "5eba5bb7900576e5c44f34b2", "studentId": studentId, "courseId": courseId, "semester_time": semester_time, "gradeType": gradeType, "score": "no grade", "__v": 0 }
+        let fakedata = { "_id": "5eba5bb7900576e5c44f34b2", "studentId": studentId, "courseId": courseId, "semester_time": semester_time, "gradeType": gradeType, "score": "N/G", "__v": 0 }
         let checkforgarde = await Grade.findOne({ studentId, courseId, semester_time, gradeType });
         if (checkforgarde) {
             return checkforgarde;

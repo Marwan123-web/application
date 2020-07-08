@@ -12,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
 import { NavController } from '@ionic/angular';
 import * as $ from 'jquery';
 import * as dt from 'node_modules/datatables.net';
+
 @Component({
   selector: 'app-user-course-info',
   templateUrl: 'user-course-info.page.html',
@@ -25,6 +26,8 @@ export class userCourseInfoPage implements OnInit {
   semester_time: string;
   selectedLanguage: string;
   courseCode: string;
+  obj: object;
+
 
   constructor(private adminservices: AdminservicesService, private _Activatedroute: ActivatedRoute,
     private _router: Router,
@@ -49,10 +52,26 @@ export class userCourseInfoPage implements OnInit {
   courseTotalGrades: any;
   usertotalgrades: any;
   sub: any;
+  //   <ion-item id="user-profile-info-grade" *ngFor="let grade of arrofdata">
+  //   <ion-label>
+  //       <h2>{{grade.gradeType}}</h2>
+  //       <h3>{{grade.score}}</h3>
+  //   </ion-label>
+  // </ion-item>
+  // <ion-item id="user-profile-info-total">
+  //   <ion-label>
+  //       <h2 *ngIf="courseTotalGrades">Total({{courseTotalGrades.totalGrades}})</h2>
+  //       <h3 *ngIf="usertotalgrades">{{usertotalgrades.totalGrades.totalGrades}}</h3>
+  //   </ion-label>
+  // </ion-item>
   ngOnInit(): void {
     $(document).ready(function () {
-      dt.$('#table_id').DataTable();
+      dt.$('#table_id').DataTable({
+        "scrollX": true
+      });
+
     });
+
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       this._id = params.get('id');
       this.courseCode = params.get('courseCode');
@@ -82,14 +101,13 @@ export class userCourseInfoPage implements OnInit {
             this.studentgrades = res;
             if (this.studentgrades) {
               this.arrofdata.push(this.studentgrades);
+
             }
           }, err => {
             this.studentgrades = err;
           });
 
         }
-
-
       }, err => {
         this.GradeTypeGrade = err;
       }

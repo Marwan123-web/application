@@ -18,7 +18,7 @@
         <table id="table_id" class="table table-hover table-light display">
             <thead>
                 <tr>
-                    <th scope="col">{{ 'INDEX' | translate }}</th>
+                    <th scope="col">{{ 'No' | translate }}</th>
                     <th scope="col">{{ 'ID' | translate }}</th>
                     <th scope="col">{{ 'NAME' | translate }}</th>
                     <th scope="col">{{ 'EMAIL' | translate }} </th>
@@ -26,10 +26,10 @@
             </thead>
             <tbody>
                 <tr *ngFor="let user of courseusers;index as i">
-                    <th scope="row">{{i+1}}</th>
-                    <th scope="row"><a [routerLink]="['/user/profile/', user._id]">{{user._id}}</a></th>
-                    <td scope="row">{{user.name}}</td>
-                    <th scope="row">{{user.email}}</th>
+                    <th scope="col">{{i+1}}</th>
+                    <th scope="col"><a>{{user._id}}</a></th>
+                    <th scope="col">{{user.name}}</th>
+                    <th scope="col">{{user.email}}</th>
                 </tr>
             </tbody>
         </table>

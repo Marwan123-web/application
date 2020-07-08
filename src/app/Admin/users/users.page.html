@@ -35,14 +35,14 @@
                 <tr>
                     <th scope="col">{{ 'ID' | translate }}</th>
                     <th scope="col">{{ 'NAME' | translate }}</th>
-                    <th scope="col">{{ 'EMAIL' | translate }}</th>
+                    <!-- <th scope="col">{{ 'EMAIL' | translate }}</th> -->
                 </tr>
             </thead>
-            <tbody *ngFor='let user of usersdata'>
-                <tr>
-                    <th scope="row"><a (click)="openClickedUser(user._id)">{{user._id}}</a></th>
-                    <td>{{user.name}}</td>
-                    <td>{{user.email}}</td>
+            <tbody>
+                <tr *ngFor='let user of usersdata'>
+                    <th scope="row"><a [routerLink]="['/user/profile', user._id]">{{user._id}}</a></th>
+                    <td scope="row">{{user.name}}</td>
+                    <!-- <td>{{user.email}}</td> -->
                 </tr>
             </tbody>
         </table>

@@ -19,7 +19,9 @@
             <ion-label>
                 {{ 'COURSES' | translate }}
             </ion-label>
-            <ion-select [(ngModel)]="courseType" [ngModelOptions]="{standalone: true}" slot="end" [interfaceOptions]="customPopoverOptions" interface="popover" id='role' (ionChange)="onSelectChange($event)">
+            <ion-select [(ngModel)]="courseType" [ngModelOptions]="{standalone: true}" slot="end"
+                [interfaceOptions]="customPopoverOptions" interface="popover" id='role'
+                (ionChange)="onSelectChange($event)">
                 <ion-select-option value="new">{{ 'NEW' | translate }}</ion-select-option>
                 <ion-select-option value="pass">{{ 'PASS' | translate }}</ion-select-option>
                 <ion-select-option value="fail">{{ 'FAIL' | translate }}</ion-select-option>
@@ -55,7 +57,8 @@
                     </p>
                 </div>
             </ion-item>
-            <ion-item color="positive" (click)="openSemester(course.data.Id,course.data.semester_time)">
+            <ion-item color="positive"
+                [routerLink]="['/course/semester/info', course.data.Id,course.data.semester_time]">
                 <ion-icon name="open" item-left></ion-icon>
                 {{ 'OPEN' | translate}}
             </ion-item>
